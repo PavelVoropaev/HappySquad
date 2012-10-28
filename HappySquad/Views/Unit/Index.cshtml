@@ -1,0 +1,124 @@
+﻿@model IEnumerable<HappySquad.Models.Unit>
+
+@{
+    ViewBag.Title = "Персоонажи";
+}
+
+<h2>Персоонажи</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Race)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.About)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Models)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LootId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.T)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.W)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.I)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.A)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ld)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sv)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Race)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.About)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Models)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LootId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.S)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.T)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.W)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.I)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.A)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ld)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sv)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

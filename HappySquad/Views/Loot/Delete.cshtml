@@ -1,0 +1,116 @@
+﻿@model HappySquad.Models.Loot
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Loot</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.About)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.About)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Cost)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Cost)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Type)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Type)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Excludes)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Excludes)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.WS)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.WS)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BS)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BS)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.S)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.S)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.T)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.T)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.W)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.W)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.I)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.I)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.A)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.A)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Ld)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Ld)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sv)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sv)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

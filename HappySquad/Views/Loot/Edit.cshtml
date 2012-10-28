@@ -1,0 +1,141 @@
+﻿@model HappySquad.Models.Loot
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Loot</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.About)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.About)
+            @Html.ValidationMessageFor(model => model.About)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+            @Html.ValidationMessageFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Type)
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Excludes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Excludes)
+            @Html.ValidationMessageFor(model => model.Excludes)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WS)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WS)
+            @Html.ValidationMessageFor(model => model.WS)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BS)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BS)
+            @Html.ValidationMessageFor(model => model.BS)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.S)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.S)
+            @Html.ValidationMessageFor(model => model.S)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.T)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.T)
+            @Html.ValidationMessageFor(model => model.T)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.W)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.W)
+            @Html.ValidationMessageFor(model => model.W)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.I)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.I)
+            @Html.ValidationMessageFor(model => model.I)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.A)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.A)
+            @Html.ValidationMessageFor(model => model.A)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Ld)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Ld)
+            @Html.ValidationMessageFor(model => model.Ld)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Sv)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Sv)
+            @Html.ValidationMessageFor(model => model.Sv)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
