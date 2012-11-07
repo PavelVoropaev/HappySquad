@@ -1,0 +1,29 @@
+﻿@model HappySquad.Models.Roster
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Roster</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Position)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Position)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RelationsId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RelationsId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -13,43 +13,11 @@
         <legend>Loot</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.About)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.About)
-            @Html.ValidationMessageFor(model => model.About)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Cost)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Cost)
-            @Html.ValidationMessageFor(model => model.Cost)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Type)
             @Html.ValidationMessageFor(model => model.Type)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Excludes)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Excludes)
-            @Html.ValidationMessageFor(model => model.Excludes)
         </div>
 
         <div class="editor-label">
@@ -122,6 +90,38 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Sv)
             @Html.ValidationMessageFor(model => model.Sv)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.About)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.About)
+            @Html.ValidationMessageFor(model => model.About)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+            @Html.ValidationMessageFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Models)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Models)
+            @Html.ValidationMessageFor(model => model.Models)
         </div>
 
         <p>

@@ -1,108 +1,110 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 using HappySquad.Models;
 
 namespace HappySquad.Controllers
 {
-    public class UnitController : Controller
+    public class RelationController : Controller
     {
         private readonly HappyDbContext _db = new HappyDbContext();
 
         //
-        // GET: /Unit/
+        // GET: /Relation/
 
         public ActionResult Index()
         {
-            return View(_db.Units.ToList());
+            return View(_db.Relations.ToList());
         }
 
         //
-        // GET: /Unit/Details/5
+        // GET: /Relation/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Unit unit = _db.Units.Find(id);
-            if (unit == null)
+            Relation relation = _db.Relations.Find(id);
+            if (relation == null)
             {
                 return HttpNotFound();
             }
-            return View(unit);
+            return View(relation);
         }
 
         //
-        // GET: /Unit/Create
+        // GET: /Relation/Create
 
         public ActionResult Create()
         {
+           
             return View();
         }
 
         //
-        // POST: /Unit/Create
+        // POST: /Relation/Create
 
         [HttpPost]
-        public ActionResult Create(Unit unit)
+        public ActionResult Create(Relation relation)
         {
             if (ModelState.IsValid)
             {
-                _db.Units.Add(unit);
+                _db.Relations.Add(relation);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(unit);
+            return View(relation);
         }
 
         //
-        // GET: /Unit/Edit/5
+        // GET: /Relation/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            Unit unit = _db.Units.Find(id);
-            if (unit == null)
+            Relation relation = _db.Relations.Find(id);
+            if (relation == null)
             {
                 return HttpNotFound();
             }
-            return View(unit);
+            return View(relation);
         }
 
         //
-        // POST: /Unit/Edit/5
+        // POST: /Relation/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Unit unit)
+        public ActionResult Edit(Relation relation)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(unit).State = EntityState.Modified;
+                _db.Entry(relation).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(unit);
+            return View(relation);
         }
 
         //
-        // GET: /Unit/Delete/5
+        // GET: /Relation/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Unit unit = _db.Units.Find(id);
-            if (unit == null)
+            Relation relation = _db.Relations.Find(id);
+            if (relation == null)
             {
                 return HttpNotFound();
             }
-            return View(unit);
+            return View(relation);
         }
 
         //
-        // POST: /Unit/Delete/5
+        // POST: /Relation/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Unit unit = _db.Units.Find(id);
-            _db.Units.Remove(unit);
+            Relation relation = _db.Relations.Find(id);
+            _db.Relations.Remove(relation);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

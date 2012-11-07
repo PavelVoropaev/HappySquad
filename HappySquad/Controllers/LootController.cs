@@ -7,7 +7,7 @@ namespace HappySquad.Controllers
 {
     public class LootController : Controller
     {
-        private readonly Loot.LootDBContext _db = new Loot.LootDBContext();
+        private readonly HappyDbContext _db = new HappyDbContext();
 
         //
         // GET: /Loot/

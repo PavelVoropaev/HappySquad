@@ -1,0 +1,46 @@
+﻿@model HappySquad.Models.Relation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Relation</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UnitId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UnitId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LootId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AddLootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AddLootId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ExLootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExLootId)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

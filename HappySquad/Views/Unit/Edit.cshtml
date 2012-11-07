@@ -1,5 +1,4 @@
-﻿@using HappySquad.Models
-@model HappySquad.Models.Unit
+﻿@model HappySquad.Models.Unit
 
 @{
     ViewBag.Title = "Edit";
@@ -7,70 +6,11 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Unit</legend>
-
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Race)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("RacesDropDownList", Model.Races)
-            @Html.ValidationMessageFor(model => model.Race)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Type)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("RacesDropDownList", Model.Types)
-            @Html.ValidationMessageFor(model => model.Type)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.About)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.About)
-            @Html.ValidationMessageFor(model => model.About)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Cost)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Cost)
-            @Html.ValidationMessageFor(model => model.Cost)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Models)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Models)
-            @Html.ValidationMessageFor(model => model.Models)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LootId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LootId)
-            @Html.ValidationMessageFor(model => model.LootId)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.WS)
@@ -142,6 +82,40 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Sv)
             @Html.ValidationMessageFor(model => model.Sv)
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.About)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.About)
+            @Html.ValidationMessageFor(model => model.About)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+            @Html.ValidationMessageFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Models)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Models)
+            @Html.ValidationMessageFor(model => model.Models)
         </div>
 
         <p>

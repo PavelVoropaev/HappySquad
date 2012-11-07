@@ -1,0 +1,60 @@
+﻿@model HappySquad.Models.Relation
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Relation</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UnitId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("UnitId", new SelectList(ViewBag.unitList, "Value", "Text"))
+            @Html.ValidationMessageFor(model => model.UnitId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LootId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LootId", new SelectList(ViewBag.lootList, "Value", "Text"))
+            @Html.ValidationMessageFor(model => model.LootId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddLootId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AddLootId)
+            @Html.ValidationMessageFor(model => model.AddLootId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ExLootId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ExLootId)
+            @Html.ValidationMessageFor(model => model.ExLootId)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

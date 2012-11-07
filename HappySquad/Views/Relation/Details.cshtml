@@ -1,0 +1,43 @@
+﻿@model HappySquad.Models.Relation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Relation</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UnitId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UnitId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LootId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AddLootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AddLootId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ExLootId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExLootId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

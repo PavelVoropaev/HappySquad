@@ -21,6 +21,7 @@ namespace HappySquad.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string RosterId { get; set; }
     }
 
     public class RegisterExternalLoginModel

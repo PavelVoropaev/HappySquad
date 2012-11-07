@@ -164,12 +164,19 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LootController.cs" />
+    <Compile Include="Controllers\RelationController.cs" />
+    <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Relation.cs" />
+    <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\Race.cs" />
+    <Compile Include="Models\Roster.cs" />
+    <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Loot.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\BaseState.cs" />
@@ -279,8 +286,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -296,6 +301,16 @@
     <Content Include="Views\Loot\Create.cshtml" />
     <Content Include="Views\Loot\Edit.cshtml" />
     <Content Include="Views\Loot\Delete.cshtml" />
+    <Content Include="Views\Relation\Index.cshtml" />
+    <Content Include="Views\Relation\Details.cshtml" />
+    <Content Include="Views\Relation\Create.cshtml" />
+    <Content Include="Views\Relation\Edit.cshtml" />
+    <Content Include="Views\Relation\Delete.cshtml" />
+    <Content Include="Views\Roster\Index.cshtml" />
+    <Content Include="Views\Roster\Details.cshtml" />
+    <Content Include="Views\Roster\Create.cshtml" />
+    <Content Include="Views\Roster\Edit.cshtml" />
+    <Content Include="Views\Roster\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,60 @@
+﻿@model HappySquad.Models.Roster
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Roster</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RosterName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RosterName)
+            @Html.ValidationMessageFor(model => model.RosterName)
+        </div>
+        <div class="unit">
+        </div>
+        <p>
+            <input type="button" id="add" onclick="addUnit()" value="Добавить Юнита" />
+        </p>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+        <script src="/Scripts/jquery-1.7.1.js"></script>
+        <script>
+            var i = 0;
+
+            function addLoot() {
+
+                $("@Html.DropDownList("LootId", new SelectList(ViewBag.lootList, "Value", "Text")).ToHtmlString().Replace('\n', ' ').Replace('\r', ' ')".replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')).fadeIn('slow').appendTo('.Unit' + i);
+                  
+                }
+            function addUnit() {
+                i++;
+                    $(('<div class="Unit' + i +'">' + "@Html.DropDownList("UnitId", new SelectList(ViewBag.unitList, "Value", "Text")).ToHtmlString().Replace('\n', ' ').Replace('\r', ' ') + " + "</div>").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')).fadeIn('slow').appendTo('.unit') ;
+                    $('<input type="button" id="add[]" onclick="addLoot()" value="Добавить Лута">').fadeIn('slow').appendTo('.unit');
+          
+            }
+
+        </script>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
