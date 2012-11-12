@@ -36,26 +36,37 @@ namespace HappySquad.Controllers
 
         public ActionResult Create()
         {
-              var units = new List<SelectListItem>();
-            foreach (var t in _db.Units)
-            {
-                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
-                units.Add(s);
-            }
-            ViewBag.unitList = units;
+            ViewBag.unitList = _db.Units.AsEnumerable().
+                Select(unit => new SelectListItem
+                                   {
+                                       Text = unit.Name,
+                                       Value = unit.Id.ToString()
+                                   });
 
-            var loots = new List<SelectListItem>();
-            foreach (var t in _db.Loots)
-            {
-                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
-                loots.Add(s);
-            }
-            ViewBag.lootList = loots;
+            ViewBag.lootList = _db.Loots.AsEnumerable().
+                Select(loot => new SelectListItem
+                                {
+                                    Text = loot.Name,
+                                    Value = loot.Id.ToString()
+                                });
             return View();
         }
 
-        //
-        // POST: /Roster/Create
+        [HttpPost]
+        public ActionResult GetLootByUnitId(string race, string type)
+        {
+            var units = _db.Units.AsEnumerable().Where(unit => unit.Race.ToString() == race && unit.Type.ToString() == type).ToList();
+            return Json(units);
+        }
+
+        [HttpPost]
+        public ActionResult GetCostById(string id)
+        {
+            var units = _db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == id).ToList();
+            var firstOrDefault = units.FirstOrDefault();
+            if (firstOrDefault != null) return Json(firstOrDefault.Cost);
+            return Json(0);
+        }
 
         [HttpPost]
         public ActionResult Create(List<Roster> rosters)
@@ -64,8 +75,8 @@ namespace HappySquad.Controllers
             {
                 foreach (var roster in rosters)
                 {
-                _db.Rosters.Add(roster);
-                _db.SaveChanges();
+                    _db.Rosters.Add(roster);
+                    _db.SaveChanges();
                 }
                 return RedirectToAction("Index");
             }

@@ -36,7 +36,23 @@ namespace HappySquad.Controllers
 
         public ActionResult Create()
         {
-           
+            var units = new List<SelectListItem>();
+            foreach (var t in _db.Units)
+            {
+                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
+                units.Add(s);
+            }
+            ViewBag.unitList = units;
+
+
+
+            var loots = new List<SelectListItem>();
+            foreach (var t in _db.Loots)
+            {
+                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
+                loots.Add(s);
+            }
+            ViewBag.lootList = loots;
             return View();
         }
 

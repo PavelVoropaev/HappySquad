@@ -1,4 +1,5 @@
-﻿@model HappySquad.Models.Roster
+﻿@using HappySquad.Models
+@model Roster
 
 @{
     ViewBag.Title = "Create";
@@ -20,31 +21,72 @@
             @Html.EditorFor(model => model.RosterName)
             @Html.ValidationMessageFor(model => model.RosterName)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Race)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
+            @Html.ValidationMessageFor(model => model.Race)
+        </div>
         <div class="unit">
         </div>
+
+
         <p>
-            <input type="button" id="add" onclick="addUnit()" value="Добавить Юнита" />
+            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" />
         </p>
+
+        <div id="cost">
+            Цена за ростер: 
+        </div>
+
 
         <p>
             <input type="submit" value="Create" />
         </p>
-        <script src="/Scripts/jquery-1.7.1.js"></script>
         <script>
-            var i = 0;
-
-            function addLoot() {
-
-                $("@Html.DropDownList("LootId", new SelectList(ViewBag.lootList, "Value", "Text")).ToHtmlString().Replace('\n', ' ').Replace('\r', ' ')".replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')).fadeIn('slow').appendTo('.Unit' + i);
-                  
-                }
-            function addUnit() {
-                i++;
-                    $(('<div class="Unit' + i +'">' + "@Html.DropDownList("UnitId", new SelectList(ViewBag.unitList, "Value", "Text")).ToHtmlString().Replace('\n', ' ').Replace('\r', ' ') + " + "</div>").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')).fadeIn('slow').appendTo('.unit') ;
-                    $('<input type="button" id="add[]" onclick="addLoot()" value="Добавить Лута">').fadeIn('slow').appendTo('.unit');
-          
+            var i = 1;
+            var cost = 0;
+            function RefreshCost() {
+                $("#cost").text("");
+                $("#cost").append('Цена за ростер:' + cost);
+            }
+            function addUnit(type) {
+                var race = $("#Race").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/Roster/GetLootByUnitId",
+                    data: {
+                        race: race,
+                        type: type
+                    },
+                    success: function (data) {
+                        var str = "";
+                        cost = cost + data[0].Cost;
+                        $.each(data, function (i) {
+                            str = str + '<option value="' + this.Id + '">' + this.Name + '</option>';
+                        });
+                        $('<select onchange="selectedUnit(' + i + ',this.options[this.selectedIndex].value' + ')" id="Unit' + i + '"name="Unit">' + str + ' </select>').fadeIn('slow').appendTo('.unit');
+                        i++;
+                        RefreshCost();
+                    },
+                    dataType: "json"
+                });
             }
 
+            function selectedUnit(num, unitId) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/Roster/GetCostById",
+                    data: {
+                        id: unitId
+                    },
+                    success: function (data) {
+                        cost = data;
+                        RefreshCost();
+                    }
+                });
+            };
         </script>
     </fieldset>
 }
