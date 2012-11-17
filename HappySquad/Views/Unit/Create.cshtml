@@ -2,7 +2,7 @@
 @model Unit
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Каталог персоонажей";
 }
 
 <h2>Create</h2>
@@ -21,6 +21,21 @@
             @Html.ValidationMessageFor(model => model.Race)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.WS)
@@ -92,14 +107,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Sv)
             @Html.ValidationMessageFor(model => model.Sv)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
         </div>
 
         <div class="editor-label">

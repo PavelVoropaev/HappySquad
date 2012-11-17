@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
@@ -60,28 +60,33 @@ namespace HappySquad.Controllers
         }
 
         [HttpPost]
+        public ActionResult SetUnitByPos(string pos, string id)
+        {
+            var roster = new Roster { Position = Convert.ToByte(pos), RelationsId = Convert.ToInt32(id) };
+            _db.Rosters.Add(roster);
+            _db.SaveChanges();
+            return Json(roster);
+        }
+
+        [HttpPost]
         public ActionResult GetCostById(string id)
         {
             var units = _db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == id).ToList();
             var firstOrDefault = units.FirstOrDefault();
-            if (firstOrDefault != null) return Json(firstOrDefault.Cost);
-            return Json(0);
+            return Json(firstOrDefault != null ? firstOrDefault.Cost : 0);
         }
 
         [HttpPost]
-        public ActionResult Create(List<Roster> rosters)
+        public ActionResult Create(Roster roster)
         {
             if (ModelState.IsValid)
             {
-                foreach (var roster in rosters)
-                {
-                    _db.Rosters.Add(roster);
-                    _db.SaveChanges();
-                }
+                _db.Rosters.Add(roster);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(rosters.FirstOrDefault());
+            return View(roster);
         }
 
         //

@@ -2,10 +2,10 @@
 @model Roster
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создать ростер";
 }
 
-<h2>Create</h2>
+<h2>Создать ростер</h2>
 
 @using (Html.BeginForm())
 {
@@ -15,79 +15,48 @@
         <legend>Roster</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.RosterName)
+            <h3>Название ростера:</h3>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.RosterName)
             @Html.ValidationMessageFor(model => model.RosterName)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.Race)
+            <h3>Выберете расу:</h3>
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
+            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))), new { onchange = "changeRace()" })
             @Html.ValidationMessageFor(model => model.Race)
         </div>
-        <div class="unit">
+        <hr />
+
+        <div class="HQ">
         </div>
-
-
         <p>
             <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" />
         </p>
+        <hr />
+
+        <div class="Trpoops">
+        </div>
+        <p>
+            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" />
+        </p>
+        <hr />
+
+        <div class="Elite">
+        </div>
+        <p>
+            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" />
+        </p>
+        <hr />
 
         <div id="cost">
             Цена за ростер: 
         </div>
-
-
         <p>
             <input type="submit" value="Create" />
         </p>
-        <script>
-            var i = 1;
-            var cost = 0;
-            function RefreshCost() {
-                $("#cost").text("");
-                $("#cost").append('Цена за ростер:' + cost);
-            }
-            function addUnit(type) {
-                var race = $("#Race").val();
-                $.ajax({
-                    type: 'POST',
-                    url: "/Roster/GetLootByUnitId",
-                    data: {
-                        race: race,
-                        type: type
-                    },
-                    success: function (data) {
-                        var str = "";
-                        cost = cost + data[0].Cost;
-                        $.each(data, function (i) {
-                            str = str + '<option value="' + this.Id + '">' + this.Name + '</option>';
-                        });
-                        $('<select onchange="selectedUnit(' + i + ',this.options[this.selectedIndex].value' + ')" id="Unit' + i + '"name="Unit">' + str + ' </select>').fadeIn('slow').appendTo('.unit');
-                        i++;
-                        RefreshCost();
-                    },
-                    dataType: "json"
-                });
-            }
-
-            function selectedUnit(num, unitId) {
-                $.ajax({
-                    type: 'POST',
-                    url: "/Roster/GetCostById",
-                    data: {
-                        id: unitId
-                    },
-                    success: function (data) {
-                        cost = data;
-                        RefreshCost();
-                    }
-                });
-            };
-        </script>
     </fieldset>
 }
 
@@ -97,6 +66,96 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var i = 1;
+        var Totalcost = 0;
+        var race = $("#Race").val();
+
+        $(document).ready(function () {
+            addUnit("HQ");
+            addUnit("Trpoops");
+            addUnit("Trpoops");
+            refreshCost();
+        });
+
+        function changeRace() {
+            race = $("#Race").val();
+
+            while (i > 1) {
+                $('.Units:last').remove();
+                i--;
+            }
+            addUnit("HQ");
+            addUnit("Trpoops");
+            addUnit("Trpoops");
+            refreshCost();
+        }
+
+        function refreshCost() {
+            Totalcost = 0;
+            $.each($('.Units'), function () {
+                if (isFinite(this.options[this.selectedIndex].value))
+                    Totalcost = Totalcost + parseInt(this.options[this.selectedIndex].value);
+            });
+            if (Totalcost == 0) {
+                $.each($('.Unit'), function () {
+                    if (isFinite(this.options[this.selectedIndex].value))
+                        Totalcost = Totalcost + parseInt(this.options[this.selectedIndex].value);
+                });
+            }
+
+            $("#cost").text("");
+            $("#cost").append('Цена за ростер:' + Totalcost);
+        }
+
+        function addUnit(type) {
+            $.ajax({
+                type: 'POST',
+                url: "/Roster/GetLootByUnitId",
+                data: {
+                    race: race,
+                    type: type
+                },
+                success: function (data) {
+                    var str = "";
+                    $.each(data, function () {
+                        str = str + '<option value="' + this.Cost + '">' + this.Name + '</option>';
+                    });
+                    $('<p><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + str + ' </select>').fadeIn('slow').appendTo('.' + type);
+                    i++;
+                },
+                dataType: "json"
+            });
+        }
+
+        //function setUnitToPos(pos, id) {
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: "/Roster/SetUnitByPos",
+        //        data: {
+        //            pos: pos,
+        //            id: id,
+        //        },
+        //        success: function () {
+        //        },
+        //        dataType: "json"
+        //    });
+        //}
+
+        //function changeUnit(num, unitId) {
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: "/Roster/GetCostById",
+        //        data: {
+        //            id: unitId
+        //        },
+        //        success: function (data) {
+        //            Totalcost = data;
+        //        }
+        //    });
+        //};
+    </script>
+
+
 }
-
-

@@ -1,7 +1,8 @@
-﻿@model HappySquad.Models.Unit
+﻿@using HappySquad.Models
+@model HappySquad.Models.Unit
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Каталог персоонажей";
 }
 
 <h2>Edit</h2>
@@ -11,6 +12,21 @@
 
     <fieldset>
         <legend>Unit</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Race)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
+            @Html.ValidationMessageFor(model => model.Race)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.WS)

@@ -1,16 +1,24 @@
 ﻿@model HappySquad.Models.Loot
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Добилвить снаряжение";
 }
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Loot</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Type)
@@ -90,14 +98,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Sv)
             @Html.ValidationMessageFor(model => model.Sv)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
         </div>
 
         <div class="editor-label">
