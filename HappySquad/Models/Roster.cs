@@ -7,5 +7,7 @@
         public Race Race { set; get; }
         public byte Position { set; get; }
         public int RelationsId { set; get; }
+
+
     }
 }

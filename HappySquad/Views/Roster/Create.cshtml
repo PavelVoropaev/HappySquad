@@ -55,7 +55,7 @@
             Цена за ростер: 
         </div>
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" class="submit" value="Create" />
         </p>
     </fieldset>
 }
@@ -69,18 +69,43 @@
 
     <script>
         var i = 1;
-        var Totalcost = 0;
-        var race = $("#Race").val();
+        var TotalCost = 0;
+        var raceId;
 
         $(document).ready(function () {
             addUnit("HQ");
             addUnit("Trpoops");
             addUnit("Trpoops");
             refreshCost();
+            raceId = $("#Race")[0].tabIndex;
+            $('.submit').click(function () {
+
+                var unitsId = [];
+                $("select").each(function (index, domEle) {
+                    if (domEle.className == "Units")
+                        unitsId.push(domEle.options[this.selectedIndex].id);
+                });
+
+                if (unitsId.length == 0) {
+                    unitsId = "none";
+                }
+                var rosterName = $("#RosterName").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/Roster/Create",
+                    data: {
+                        raceId: raceId,
+                        name: rosterName,
+                        unitsId: unitsId.toString()
+                    }, dataType: "json"
+                });
+                return false;
+            });
+
         });
 
         function changeRace() {
-            race = $("#Race").val();
+            raceId = $("#Race")[this.selectedIndex].tabIndex;
 
             while (i > 1) {
                 $('.Units:last').remove();
@@ -93,20 +118,14 @@
         }
 
         function refreshCost() {
-            Totalcost = 0;
+            TotalCost = 0;
             $.each($('.Units'), function () {
                 if (isFinite(this.options[this.selectedIndex].value))
-                    Totalcost = Totalcost + parseInt(this.options[this.selectedIndex].value);
+                    TotalCost = TotalCost + parseInt(this.options[this.selectedIndex].value);
             });
-            if (Totalcost == 0) {
-                $.each($('.Unit'), function () {
-                    if (isFinite(this.options[this.selectedIndex].value))
-                        Totalcost = Totalcost + parseInt(this.options[this.selectedIndex].value);
-                });
-            }
 
             $("#cost").text("");
-            $("#cost").append('Цена за ростер:' + Totalcost);
+            $("#cost").append('Цена за ростер:' + TotalCost);
         }
 
         function addUnit(type) {
@@ -114,13 +133,13 @@
                 type: 'POST',
                 url: "/Roster/GetLootByUnitId",
                 data: {
-                    race: race,
+                    raceId: raceId,
                     type: type
                 },
                 success: function (data) {
                     var str = "";
                     $.each(data, function () {
-                        str = str + '<option value="' + this.Cost + '">' + this.Name + '</option>';
+                        str = str + '<option value="' + this.Cost + '"id="' + this.Id + '">' + this.Name + '</option>';
                     });
                     $('<p><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + str + ' </select>').fadeIn('slow').appendTo('.' + type);
                     i++;
@@ -128,6 +147,9 @@
                 dataType: "json"
             });
         }
+
+
+
 
         //function setUnitToPos(pos, id) {
         //    $.ajax({
@@ -151,7 +173,7 @@
         //            id: unitId
         //        },
         //        success: function (data) {
-        //            Totalcost = data;
+        //            TotalCost = data;
         //        }
         //    });
         //};

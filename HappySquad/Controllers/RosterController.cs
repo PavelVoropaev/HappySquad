@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
@@ -55,7 +56,7 @@ namespace HappySquad.Controllers
         [HttpPost]
         public ActionResult GetLootByUnitId(string race, string type)
         {
-            var units = _db.Units.AsEnumerable().Where(unit => unit.Race.ToString() == race && unit.Type.ToString() == type).ToList();
+            var units = _db.Units.AsEnumerable().Where(unit => unit.Race == (Race)Convert.ToByte(race) && unit.Type.ToString() == type).ToList();
             return Json(units);
         }
 
@@ -77,16 +78,23 @@ namespace HappySquad.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Roster roster)
+        public ActionResult Create(string name, string race, string unitsId)
         {
             if (ModelState.IsValid)
             {
-                _db.Rosters.Add(roster);
+                var qwe = unitsId.Split(',');
+                byte i = 0;
+                foreach (var unitId in qwe)
+                {
+                    i++;
+                    _db.Rosters.Add(new Roster { Race = (Race)Convert.ToByte(race), Id = 1, Position = i, RosterName = name });
+                }
+                _db.Rosters.Add(new Roster());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(roster);
+            return RedirectToAction("Index");
         }
 
         //
