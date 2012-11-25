@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using System.Web.Mvc;
-using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
-using WebMatrix.WebData;
-using HappySquad.Filters;
-using HappySquad.Models;
-
-namespace HappySquad.Controllers
+﻿namespace HappySquad.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Transactions;
+    using System.Web.Mvc;
+    using System.Web.Security;
+
+    using DotNetOpenAuth.AspNet;
+
+    using HappySquad.Filters;
+    using HappySquad.Models;
+
+    using Microsoft.Web.WebPages.OAuth;
+
+    using WebMatrix.WebData;
+
     [Authorize]
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        //
-        // GET: /Account/Login
+        public enum ManageMessageId
+        {
+            ChangePasswordSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+        }
 
+        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -26,9 +35,7 @@ namespace HappySquad.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Login
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -40,13 +47,11 @@ namespace HappySquad.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
             return View(model);
         }
 
-        //
         // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -56,18 +61,14 @@ namespace HappySquad.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
         // GET: /Account/Register
-
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
         // POST: /Account/Register
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -84,7 +85,7 @@ namespace HappySquad.Controllers
                 }
                 catch (MembershipCreateUserException e)
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                    ModelState.AddModelError(string.Empty, ErrorCodeToString(e.StatusCode));
                 }
             }
 
@@ -92,9 +93,7 @@ namespace HappySquad.Controllers
             return View(model);
         }
 
-        //
         // POST: /Account/Disassociate
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Disassociate(string provider, string providerUserId)
@@ -121,24 +120,20 @@ namespace HappySquad.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
-        //
         // GET: /Account/Manage
-
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : "";
+                : string.Empty;
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
 
-        //
         // POST: /Account/Manage
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
@@ -167,7 +162,7 @@ namespace HappySquad.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError(string.Empty, "The current password is incorrect or the new password is invalid.");
                     }
                 }
             }
@@ -190,7 +185,7 @@ namespace HappySquad.Controllers
                     }
                     catch (Exception e)
                     {
-                        ModelState.AddModelError("", e);
+                        ModelState.AddModelError(string.Empty, e);
                     }
                 }
             }
@@ -199,9 +194,7 @@ namespace HappySquad.Controllers
             return View(model);
         }
 
-        //
         // POST: /Account/ExternalLogin
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -210,9 +203,7 @@ namespace HappySquad.Controllers
             return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
         }
 
-        //
         // GET: /Account/ExternalLoginCallback
-
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
@@ -243,9 +234,7 @@ namespace HappySquad.Controllers
             }
         }
 
-        //
         // POST: /Account/ExternalLoginConfirmation
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -265,6 +254,7 @@ namespace HappySquad.Controllers
                 using (UsersContext db = new UsersContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+
                     // Check if user already exists
                     if (user == null)
                     {
@@ -289,9 +279,7 @@ namespace HappySquad.Controllers
             return View(model);
         }
 
-        //
         // GET: /Account/ExternalLoginFailure
-
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
@@ -310,7 +298,7 @@ namespace HappySquad.Controllers
         public ActionResult RemoveExternalLogins()
         {
             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
-            List<ExternalLogin> externalLogins = new List<ExternalLogin>();
+            var externalLogins = new List<ExternalLogin>();
             foreach (OAuthAccount account in accounts)
             {
                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);
@@ -328,42 +316,6 @@ namespace HappySquad.Controllers
         }
 
         #region Helpers
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        public enum ManageMessageId
-        {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-        }
-
-        internal class ExternalLoginResult : ActionResult
-        {
-            public ExternalLoginResult(string provider, string returnUrl)
-            {
-                Provider = provider;
-                ReturnUrl = returnUrl;
-            }
-
-            public string Provider { get; private set; }
-            public string ReturnUrl { get; private set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
-            }
-        }
-
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for
@@ -399,6 +351,36 @@ namespace HappySquad.Controllers
 
                 default:
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+            }
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        internal class ExternalLoginResult : ActionResult
+        {
+            public ExternalLoginResult(string provider, string returnUrl)
+            {
+                Provider = provider;
+                ReturnUrl = returnUrl;
+            }
+
+            public string Provider { get; private set; }
+
+            public string ReturnUrl { get; private set; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
             }
         }
         #endregion

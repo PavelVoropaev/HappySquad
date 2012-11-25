@@ -2,12 +2,14 @@
 {
     public class Roster
     {
-        public int Id { set; get; }
-        public string RosterName { set; get; }
-        public Race Race { set; get; }
-        public byte Position { set; get; }
-        public int RelationsId { set; get; }
+        public int Id { get; set; }
 
+        public string RosterName { get; set; }
 
+        public Race Race { get; set; }
+
+        public byte Position { get; set; }
+
+        public int RelationsId { get; set; }
     }
 }

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-
-namespace HappySquad.Models
+﻿namespace HappySquad.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
+    using System.Diagnostics.CodeAnalysis;
+
     public class UsersContext : DbContext
     {
         public UsersContext()
@@ -14,13 +15,15 @@ namespace HappySquad.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
     }
 
-    [Table("UserProfile")]
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed. Suppression is OK here."), Table("UserProfile")]
     public class UserProfile
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
+
         public string UserName { get; set; }
+
         public string RosterId { get; set; }
     }
 
@@ -88,7 +91,9 @@ namespace HappySquad.Models
     public class ExternalLogin
     {
         public string Provider { get; set; }
+
         public string ProviderDisplayName { get; set; }
+
         public string ProviderUserId { get; set; }
     }
 }

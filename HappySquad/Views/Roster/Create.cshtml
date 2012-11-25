@@ -25,7 +25,8 @@
             <h3>Выберете расу:</h3>
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))), new { onchange = "changeRace()" })
+
+            @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"), new { onchange = "changeRace()" })
             @Html.ValidationMessageFor(model => model.Race)
         </div>
         <hr />
@@ -70,25 +71,27 @@
     <script>
         var i = 1;
         var TotalCost = 0;
-        var raceId;
+        var raceId = $("select#Race").val();
 
         $(document).ready(function () {
             addUnit("HQ");
             addUnit("Trpoops");
             addUnit("Trpoops");
-            refreshCost();
-            raceId = $("#Race")[0].tabIndex;
+            raceId = 0;
+
             $('.submit').click(function () {
 
                 var unitsId = [];
-                $("select").each(function (index, domEle) {
-                    if (domEle.className == "Units")
-                        unitsId.push(domEle.options[this.selectedIndex].id);
+
+                $('select').each(function () {
+                    if (this.className == "Units")
+                        unitsId.push(this.options[this.selectedIndex].id);
                 });
 
                 if (unitsId.length == 0) {
                     unitsId = "none";
                 }
+                alert("Id Unit:" + unitsId);
                 var rosterName = $("#RosterName").val();
                 $.ajax({
                     type: 'POST',
@@ -97,15 +100,17 @@
                         raceId: raceId,
                         name: rosterName,
                         unitsId: unitsId.toString()
-                    }, dataType: "json"
+                    },
+                    dataType: "json"
                 });
                 return false;
             });
 
         });
 
+
         function changeRace() {
-            raceId = $("#Race")[this.selectedIndex].tabIndex;
+            raceId = $("select#Race").val();
 
             while (i > 1) {
                 $('.Units:last').remove();
@@ -114,70 +119,65 @@
             addUnit("HQ");
             addUnit("Trpoops");
             addUnit("Trpoops");
-            refreshCost();
         }
 
         function refreshCost() {
             TotalCost = 0;
-            $.each($('.Units'), function () {
-                if (isFinite(this.options[this.selectedIndex].value))
-                    TotalCost = TotalCost + parseInt(this.options[this.selectedIndex].value);
+            $('select').each(function () {
+                if (this.className.toString().indexOf("Unit") != -1 || this.className.toString().indexOf("Loot") != -1) {
+                    TotalCost += parseInt(this.options[this.selectedIndex].value);
+                }
             });
-
             $("#cost").text("");
-            $("#cost").append('Цена за ростер:' + TotalCost);
+            $("#cost").append('Цена за ростер: ' + TotalCost);
         }
 
         function addUnit(type) {
             $.ajax({
                 type: 'POST',
-                url: "/Roster/GetLootByUnitId",
+                url: "/Roster/AddUnit",
                 data: {
-                    raceId: raceId,
+                    race: raceId,
                     type: type
                 },
                 success: function (data) {
-                    var str = "";
+                    var unitList = "";
+                    var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
                     $.each(data, function () {
-                        str = str + '<option value="' + this.Cost + '"id="' + this.Id + '">' + this.Name + '</option>';
+                        unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
                     });
-                    $('<p><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + str + ' </select>').fadeIn('slow').appendTo('.' + type);
+
+                    $('<table id = "UnitTable' + i + '">  <tr>' +
+                        '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
+                        ' </tr></table>').fadeIn('slow').appendTo('.' + type);
                     i++;
+                    refreshCost();
                 },
                 dataType: "json"
             });
         }
 
+        function addLoot(i) {
+            var unitId = $('#Unit' + i + ' option:selected').attr("UnitId");
 
+            $.ajax({
+                type: 'POST',
+                url: "/Roster/AddLoot",
+                data: {
+                    unitId: unitId
+                },
+                success: function (data) {
+                    var lootList = "";
+                    $.each(data, function () {
+                        lootList = lootList + '<option value="' + this.Cost + '"Lootid="' + this.Id + '">' + this.Name + '</option>';
+                    });
 
-
-        //function setUnitToPos(pos, id) {
-        //    $.ajax({
-        //        type: 'POST',
-        //        url: "/Roster/SetUnitByPos",
-        //        data: {
-        //            pos: pos,
-        //            id: id,
-        //        },
-        //        success: function () {
-        //        },
-        //        dataType: "json"
-        //    });
-        //}
-
-        //function changeUnit(num, unitId) {
-        //    $.ajax({
-        //        type: 'POST',
-        //        url: "/Roster/GetCostById",
-        //        data: {
-        //            id: unitId
-        //        },
-        //        success: function (data) {
-        //            TotalCost = data;
-        //        }
-        //    });
-        //};
+                    $('<tr><td></td><td><select onchange="refreshCost()" id="Loot' + i + '"class="Loot" name="dynamic[]">' + lootList + ' </select></td></tr>').fadeIn('slow').appendTo("#UnitTable" + i);
+                    i++;
+                    refreshCost();
+                },
+                dataType: "json"
+            });
+        }
     </script>
-
-
 }

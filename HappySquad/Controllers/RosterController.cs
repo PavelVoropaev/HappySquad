@@ -1,52 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web.Mvc;
-using HappySquad.Models;
-
-namespace HappySquad.Controllers
+﻿namespace HappySquad.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using HappySquad.Models;
+
+    [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1512:SingleLineCommentsMustNotBeFollowedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
     public class RosterController : Controller
     {
-        private readonly HappyDbContext _db = new HappyDbContext();
+        private readonly HappyDbContext db = new HappyDbContext();
 
-        //
         // GET: /Roster/
-
         public ActionResult Index()
         {
-            return View(_db.Rosters.ToList());
+            return View(this.db.Rosters.ToList());
         }
 
-        //
         // GET: /Roster/Details/5
-
         public ActionResult Details(int id = 0)
         {
-            var roster = _db.Rosters.Find(id);
+            var roster = this.db.Rosters.Find(id);
             if (roster == null)
             {
                 return HttpNotFound();
             }
+
             return View(roster);
         }
 
-        //
         // GET: /Roster/Create
-
         public ActionResult Create()
         {
-            ViewBag.unitList = _db.Units.AsEnumerable().
-                Select(unit => new SelectListItem
-                                   {
-                                       Text = unit.Name,
-                                       Value = unit.Id.ToString()
-                                   });
+            ViewBag.races = from Race n in Enum.GetValues(typeof(Race))
+                            select new SelectListItem
+                            {
+                                Value = Convert.ToInt16(n).ToString(),
+                                Text = HappySquad.Content.Helpers.EnumHelper.GetEnumDescription(n),
+                            };
 
-            ViewBag.lootList = _db.Loots.AsEnumerable().
-                Select(loot => new SelectListItem
-                                {
+            ViewBag.unitList = this.db.Units.AsEnumerable().Select(
+                unit => new SelectListItem
+                            {
+                                Text = unit.Name,
+                                Value = unit.Id.ToString()
+                            });
+
+            ViewBag.lootList = this.db.Loots.AsEnumerable().Select(
+                loot => new SelectListItem
+                            {
                                     Text = loot.Name,
                                     Value = loot.Id.ToString()
                                 });
@@ -54,25 +59,38 @@ namespace HappySquad.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetLootByUnitId(string race, string type)
+        public ActionResult AddUnit(string race, string type)
         {
-            var units = _db.Units.AsEnumerable().Where(unit => unit.Race == (Race)Convert.ToByte(race) && unit.Type.ToString() == type).ToList();
+            var units = this.db.Units.AsEnumerable().Where(unit => unit.Race == (Race)Convert.ToByte(race) && unit.Type.ToString() == type).ToList();
             return Json(units);
+        }
+
+        [HttpPost]
+        public ActionResult AddLoot(string unitId)
+        {
+            var loots = new List<Loot>();
+            var relations = this.db.Relations.AsEnumerable().Where(relation => relation.UnitId == Convert.ToByte(unitId)).ToList();
+            foreach (var relation in relations)
+            {
+                loots.AddRange(this.db.Loots.Where(loot => loot.Id == relation.LootId));
+            }
+
+            return Json(loots);
         }
 
         [HttpPost]
         public ActionResult SetUnitByPos(string pos, string id)
         {
             var roster = new Roster { Position = Convert.ToByte(pos), RelationsId = Convert.ToInt32(id) };
-            _db.Rosters.Add(roster);
-            _db.SaveChanges();
+            this.db.Rosters.Add(roster);
+            this.db.SaveChanges();
             return Json(roster);
         }
 
         [HttpPost]
         public ActionResult GetCostById(string id)
         {
-            var units = _db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == id).ToList();
+            var units = this.db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == id).ToList();
             var firstOrDefault = units.FirstOrDefault();
             return Json(firstOrDefault != null ? firstOrDefault.Cost : 0);
         }
@@ -87,72 +105,68 @@ namespace HappySquad.Controllers
                 foreach (var unitId in qwe)
                 {
                     i++;
-                    _db.Rosters.Add(new Roster { Race = (Race)Convert.ToByte(race), Id = 1, Position = i, RosterName = name });
+                    this.db.Rosters.Add(new Roster { Race = (Race)Convert.ToByte(race), Id = Convert.ToInt32(unitId), Position = i, RosterName = name });
                 }
-                _db.Rosters.Add(new Roster());
-                _db.SaveChanges();
+
+                this.db.Rosters.Add(new Roster());
+                this.db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return RedirectToAction("Index");
         }
 
-        //
         // GET: /Roster/Edit/5
-
         public ActionResult Edit(int id = 0)
         {
-            Roster roster = _db.Rosters.Find(id);
+            Roster roster = this.db.Rosters.Find(id);
             if (roster == null)
             {
                 return HttpNotFound();
             }
+
             return View(roster);
         }
 
-        //
         // POST: /Roster/Edit/5
-
         [HttpPost]
         public ActionResult Edit(Roster roster)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(roster).State = EntityState.Modified;
-                _db.SaveChanges();
+                this.db.Entry(roster).State = EntityState.Modified;
+                this.db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(roster);
         }
 
-        //
         // GET: /Roster/Delete/5
-
         public ActionResult Delete(int id = 0)
         {
-            Roster roster = _db.Rosters.Find(id);
+            Roster roster = this.db.Rosters.Find(id);
             if (roster == null)
             {
                 return HttpNotFound();
             }
+
             return View(roster);
         }
 
-        //
         // POST: /Roster/Delete/5
-
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Roster roster = _db.Rosters.Find(id);
-            _db.Rosters.Remove(roster);
-            _db.SaveChanges();
+            Roster roster = this.db.Rosters.Find(id);
+            this.db.Rosters.Remove(roster);
+            this.db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            _db.Dispose();
+            this.db.Dispose();
             base.Dispose(disposing);
         }
     }

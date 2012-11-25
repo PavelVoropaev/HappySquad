@@ -2,8 +2,8 @@
 {
     public class Unit : BaseState
     {
-        public Type Type { set; get; }
-        public Race Race { set; get; }
-    }
+        public Type Type { get; set; }
 
+        public Race Race { get; set; }
+    }
 }

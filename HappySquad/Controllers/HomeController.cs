@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
-
-namespace HappySquad.Controllers
+﻿namespace HappySquad.Controllers
 {
+    using System.Web.Mvc;
+
     public class HomeController : Controller
     {
         public ActionResult Index()

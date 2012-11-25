@@ -2,6 +2,6 @@
 {
     public class Loot : BaseState
     {
-        public string Type { set; get; }
+        public string Type { get; set; }
     }
 }
