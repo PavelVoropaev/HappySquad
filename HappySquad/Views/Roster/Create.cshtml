@@ -73,6 +73,14 @@
         var TotalCost = 0;
         var raceId = $("select#Race").val();
 
+        //Количество юнитов определенных типов
+        var hqCount = 2;
+        var troopCount = 4;
+        var eliteCount = 3;
+        var heavyCount = 3;
+        var fastCount = 3;
+        //-----------------------------------
+
         $(document).ready(function () {
             addUnit("HQ");
             addUnit("Trpoops");
@@ -133,28 +141,45 @@
         }
 
         function addUnit(type) {
-            $.ajax({
-                type: 'POST',
-                url: "/Roster/AddUnit",
-                data: {
+            //проверятор сколько можно добавить
+            switch (type)
+            {
+                case "HQ": hqCount--;
+                    break;
+                case "Trpoops": troopCount--;
+                    break;
+                case "Elite": eliteCount--;
+                    break;
+                default:;
+                    break;
+
+            }
+
+            if ((type == "HQ" && hqCount >= 0) || (type == "Trpoops" && troopCount >= 0) || (type == "Elite" && eliteCount >= 0))
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "/Roster/AddUnit",
+                    data: {
                     race: raceId,
                     type: type
                 },
-                success: function (data) {
-                    var unitList = "";
-                    var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
-                    $.each(data, function () {
-                        unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
-                    });
+                    success: function (data) {
+                        var unitList = "";
+                        var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
+                        $.each(data, function () {
+                            unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
+                });
 
-                    $('<table id = "UnitTable' + i + '">  <tr>' +
-                        '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
-                        ' </tr></table>').fadeIn('slow').appendTo('.' + type);
-                    i++;
-                    refreshCost();
+                        $('<table id = "UnitTable' + i + '">  <tr>' +
+                            '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
+                            ' </tr></table>').fadeIn('slow').appendTo('.' + type);
+                        i++;
+                        refreshCost();
                 },
-                dataType: "json"
-            });
+                    dataType: "json"
+                });
+            }
         }
 
         function addLoot(i) {
