@@ -7,6 +7,7 @@
 
 <h2>Создать ростер</h2>
 
+
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
@@ -34,21 +35,21 @@
         <div class="HQ">
         </div>
         <p>
-            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" />
+            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" /><input onclick="remove('HQ')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Trpoops">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" />
+            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" /><input  onclick="remove('Trpoops')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Elite">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" />
+            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" /><input onclick="remove('Elite')" value="X" type="button" />
         </p>
         <hr />
 
@@ -73,12 +74,19 @@
         var TotalCost = 0;
         var raceId = $("select#Race").val();
 
-        //Количество юнитов определенных типов
-        var hqCount = 2;
-        var troopCount = 4;
-        var eliteCount = 3;
-        var heavyCount = 3;
-        var fastCount = 3;
+        // Количество юнитов определенных типов
+        // Константы
+        var maxHqCount = 2;
+        var maxTroopCount = 4;
+        var maxEliteCount = 3;
+        var maxHeavyCount = 3;
+        var maxFastCount = 3;
+        // Не константы
+        var hqCount = 0;
+        var troopCount = 0;
+        var eliteCount = 0;
+        var heavyCount = 0;
+        var fastCount = 0;
         //-----------------------------------
 
         $(document).ready(function () {
@@ -116,6 +124,27 @@
 
         });
 
+        // ----------------------------------------------------------------------------------------------
+        // Удалятор чойсов (В вархаммере занятая ячейка организации армии называется чойсом (англ. Choice))
+        // -----------------------------------------------------------------------------------------------
+
+        function remove(type) {
+
+            switch (type) {
+                case "HQ": if (hqCount > 0) hqCount--;
+                    break;
+                case "Trpoops": if (troopCount > 0) troopCount--;
+                    break;
+                case "Elite": if (eliteCount > 0) eliteCount--;
+                    break;
+                default:;
+                    break;
+            }
+
+            $('.' + type).children().last().remove();
+
+            refreshCost();
+        }
 
         function changeRace() {
             raceId = $("select#Race").val();
@@ -141,21 +170,11 @@
         }
 
         function addUnit(type) {
+            //--------------------------------
             //проверятор сколько можно добавить
-            switch (type)
-            {
-                case "HQ": hqCount--;
-                    break;
-                case "Trpoops": troopCount--;
-                    break;
-                case "Elite": eliteCount--;
-                    break;
-                default:;
-                    break;
-
-            }
-
-            if ((type == "HQ" && hqCount >= 0) || (type == "Trpoops" && troopCount >= 0) || (type == "Elite" && eliteCount >= 0))
+            //-------------------------------
+            
+            if ((type == "HQ" && hqCount < maxHqCount) || (type == "Trpoops" && troopCount < maxTroopCount) || (type == "Elite" && eliteCount < maxEliteCount))
             {
                 $.ajax({
                     type: 'POST',
@@ -180,6 +199,19 @@
                     dataType: "json"
                 });
             }
+
+            switch (type) {
+                case "HQ": if (hqCount < maxHqCount) hqCount++;
+                    break;
+                case "Trpoops": if (troopCount < maxTroopCount) troopCount++;
+                    break;
+                case "Elite": if (eliteCount < maxEliteCount) eliteCount++;
+                    break;
+                default:;
+                    break;
+
+            }
+
         }
 
         function addLoot(i) {

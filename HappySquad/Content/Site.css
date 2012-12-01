@@ -328,6 +328,7 @@ aside {
     font-weight: 700;
 }
 
+
 /* login page */
 #loginForm {
     border-right: solid 2px #c8c8c8;
@@ -754,3 +755,5 @@ tr.pager td {
             margin: 0;
         }
 }
+
+   
