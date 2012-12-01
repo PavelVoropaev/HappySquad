@@ -7,6 +7,7 @@
 
 <h2>Создать ростер</h2>
 
+
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
@@ -34,21 +35,21 @@
         <div class="HQ">
         </div>
         <p>
-            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" />
+            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" /><input onclick="remove('HQ')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Trpoops">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" />
+            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" /><input  onclick="remove('Trpoops')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Elite">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" />
+            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" /><input onclick="remove('Elite')" value="X" type="button" />
         </p>
         <hr />
 
@@ -72,6 +73,21 @@
         var i = 1;
         var TotalCost = 0;
         var raceId = $("select#Race").val();
+
+        // Количество юнитов определенных типов
+        // Константы
+        var maxHqCount = 2;
+        var maxTroopCount = 4;
+        var maxEliteCount = 3;
+        var maxHeavyCount = 3;
+        var maxFastCount = 3;
+        // Не константы
+        var hqCount = 0;
+        var troopCount = 0;
+        var eliteCount = 0;
+        var heavyCount = 0;
+        var fastCount = 0;
+        //-----------------------------------
 
         $(document).ready(function () {
             addUnit("HQ");
@@ -108,6 +124,27 @@
 
         });
 
+        // ----------------------------------------------------------------------------------------------
+        // Удалятор чойсов (В вархаммере занятая ячейка организации армии называется чойсом (англ. Choice))
+        // -----------------------------------------------------------------------------------------------
+
+        function remove(type) {
+
+            switch (type) {
+                case "HQ": if (hqCount > 0) hqCount--;
+                    break;
+                case "Trpoops": if (troopCount > 0) troopCount--;
+                    break;
+                case "Elite": if (eliteCount > 0) eliteCount--;
+                    break;
+                default:;
+                    break;
+            }
+
+            $('.' + type).children().last().remove();
+
+            refreshCost();
+        }
 
         function changeRace() {
             raceId = $("select#Race").val();
@@ -133,28 +170,48 @@
         }
 
         function addUnit(type) {
-            $.ajax({
-                type: 'POST',
-                url: "/Roster/AddUnit",
-                data: {
+            //--------------------------------
+            //проверятор сколько можно добавить
+            //-------------------------------
+            
+            if ((type == "HQ" && hqCount < maxHqCount) || (type == "Trpoops" && troopCount < maxTroopCount) || (type == "Elite" && eliteCount < maxEliteCount))
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "/Roster/AddUnit",
+                    data: {
                     race: raceId,
                     type: type
                 },
-                success: function (data) {
-                    var unitList = "";
-                    var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
-                    $.each(data, function () {
-                        unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
-                    });
+                    success: function (data) {
+                        var unitList = "";
+                        var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
+                        $.each(data, function () {
+                            unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
+                });
 
-                    $('<table id = "UnitTable' + i + '">  <tr>' +
-                        '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
-                        ' </tr></table>').fadeIn('slow').appendTo('.' + type);
-                    i++;
-                    refreshCost();
+                        $('<table id = "UnitTable' + i + '">  <tr>' +
+                            '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
+                            ' </tr></table>').fadeIn('slow').appendTo('.' + type);
+                        i++;
+                        refreshCost();
                 },
-                dataType: "json"
-            });
+                    dataType: "json"
+                });
+            }
+
+            switch (type) {
+                case "HQ": if (hqCount < maxHqCount) hqCount++;
+                    break;
+                case "Trpoops": if (troopCount < maxTroopCount) troopCount++;
+                    break;
+                case "Elite": if (eliteCount < maxEliteCount) eliteCount++;
+                    break;
+                default:;
+                    break;
+
+            }
+
         }
 
         function addLoot(i) {
