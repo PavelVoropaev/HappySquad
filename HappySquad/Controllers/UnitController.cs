@@ -1,5 +1,6 @@
 ﻿namespace HappySquad.Controllers
 {
+    using System;
     using System.Data;
     using System.Linq;
     using System.Web.Mvc;
@@ -31,6 +32,18 @@
         // GET: /Unit/Create
         public ActionResult Create()
         {
+            ViewBag.races = from Race n in Enum.GetValues(typeof(Race))
+                            select new SelectListItem
+                            {
+                                Value = Convert.ToInt16(n).ToString(),
+                                Text = HappySquad.Content.Helpers.EnumHelper.GetEnumDescription(n),
+                            };
+            ViewBag.types = from Models.Type n in Enum.GetValues(typeof(Models.Type))
+                            select new SelectListItem
+                            {
+                                Value = Convert.ToInt16(n).ToString(),
+                                Text = HappySquad.Content.Helpers.EnumHelper.GetEnumDescription(n),
+                            };
             return View();
         }
 

@@ -96,16 +96,23 @@
         }
 
         [HttpPost]
-        public ActionResult Create(string name, string race, string unitsId)
+        public ActionResult Create(string name, string race, string unitsId, string lootId)
         {
             if (ModelState.IsValid)
             {
-                var qwe = unitsId.Split(',');
+                var unitsIdList = unitsId.Split(',');
                 byte i = 0;
-                foreach (var unitId in qwe)
+                foreach (var unitId in unitsIdList)
                 {
                     i++;
-                    this.db.Rosters.Add(new Roster { Race = (Race)Convert.ToByte(race), Id = Convert.ToInt32(unitId), Position = i, RosterName = name });
+                    this.db.Rosters.Add(
+                        new Roster
+                            {
+                                Race = (Race)Convert.ToByte(race),
+                                Id = Convert.ToInt32(unitId),
+                                Position = i,
+                                RosterName = name
+                            });
                 }
 
                 this.db.Rosters.Add(new Roster());

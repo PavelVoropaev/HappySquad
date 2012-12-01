@@ -17,7 +17,7 @@
             @Html.LabelFor(model => model.Race)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
+            @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.Race)
         </div>
 
@@ -25,7 +25,7 @@
             @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
+            @Html.DropDownListFor(model => model.Type, new SelectList(ViewBag.types, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.Type)
         </div>
 

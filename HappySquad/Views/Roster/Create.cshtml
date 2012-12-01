@@ -26,7 +26,6 @@
             <h3>Выберете расу:</h3>
         </div>
         <div class="editor-field">
-
             @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"), new { onchange = "changeRace()" })
             @Html.ValidationMessageFor(model => model.Race)
         </div>
@@ -35,21 +34,35 @@
         <div class="HQ">
         </div>
         <p>
-            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" /><input onclick="remove('HQ')" value="X" type="button" />
+            <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" /><input onclick="    remove('HQ')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Trpoops">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" /><input  onclick="remove('Trpoops')" value="X" type="button" />
+            <input type="button" onclick="addUnit('Trpoops')" value="Добавить Trpoops" /><input onclick="    remove('Trpoops')" value="X" type="button" />
         </p>
         <hr />
 
         <div class="Elite">
         </div>
         <p>
-            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" /><input onclick="remove('Elite')" value="X" type="button" />
+            <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" /><input onclick="    remove('Elite')" value="X" type="button" />
+        </p>
+        <hr />
+
+        <div class="FastAttack">
+        </div>
+        <p>
+            <input type="button" onclick="addUnit('FastAttack')" value="Добавить Fast Attack" /><input onclick="    remove('FastAttack')" value="X" type="button" />
+        </p>
+        <hr />
+
+        <div class="HeavySupport">
+        </div>
+        <p>
+            <input type="button" onclick="addUnit('HeavySupport')" value="Добавить Heavy Support" /><input onclick="    remove('HeavySupport')" value="X" type="button" />
         </p>
         <hr />
 
@@ -98,10 +111,13 @@
             $('.submit').click(function () {
 
                 var unitsId = [];
-
+                var lottId = [];
                 $('select').each(function () {
                     if (this.className == "Units")
                         unitsId.push(this.options[this.selectedIndex].id);
+                    else if (this.className == "Loots") {
+                        lottId.push(this.options[this.selectedIndex].id);
+                    }
                 });
 
                 if (unitsId.length == 0) {
@@ -115,7 +131,8 @@
                     data: {
                         raceId: raceId,
                         name: rosterName,
-                        unitsId: unitsId.toString()
+                        unitsId: unitsId.toString(),
+                        lootId: lootId.toString()
                     },
                     dataType: "json"
                 });
@@ -173,29 +190,32 @@
             //--------------------------------
             //проверятор сколько можно добавить
             //-------------------------------
-            
-            if ((type == "HQ" && hqCount < maxHqCount) || (type == "Trpoops" && troopCount < maxTroopCount) || (type == "Elite" && eliteCount < maxEliteCount))
-            {
+
+            if ((type == "HQ" && hqCount < maxHqCount) ||
+                (type == "Trpoops" && troopCount < maxTroopCount) ||
+                (type == "Elite" && eliteCount < maxEliteCount) ||
+                (type == "HeavySupport" && heavyCount < maxHeavyCount) ||
+                (type == "FastAttack" && fastCount < maxFastCount)) {
                 $.ajax({
                     type: 'POST',
                     url: "/Roster/AddUnit",
                     data: {
-                    race: raceId,
-                    type: type
-                },
+                        race: raceId,
+                        type: type
+                    },
                     success: function (data) {
                         var unitList = "";
                         var addLootButton = '<input type="button" onclick="addLoot(' + i + ')" value="Добавить Лута" />';
                         $.each(data, function () {
                             unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
-                });
+                        });
 
                         $('<table id = "UnitTable' + i + '">  <tr>' +
                             '<td><select onchange="refreshCost()" id="Unit' + i + '"class="Units" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td>' +
                             ' </tr></table>').fadeIn('slow').appendTo('.' + type);
                         i++;
                         refreshCost();
-                },
+                    },
                     dataType: "json"
                 });
             }
@@ -207,9 +227,12 @@
                     break;
                 case "Elite": if (eliteCount < maxEliteCount) eliteCount++;
                     break;
+                case "HeavySupport": if (heavyCount < maxHeavyCount) heavyCount++;
+                    break;
+                case "FastAttack": if (fastCount < maxFastCount) fastCount++;
+                    break;
                 default:;
                     break;
-
             }
 
         }
@@ -229,7 +252,7 @@
                         lootList = lootList + '<option value="' + this.Cost + '"Lootid="' + this.Id + '">' + this.Name + '</option>';
                     });
 
-                    $('<tr><td></td><td><select onchange="refreshCost()" id="Loot' + i + '"class="Loot" name="dynamic[]">' + lootList + ' </select></td></tr>').fadeIn('slow').appendTo("#UnitTable" + i);
+                    $('<tr><td></td><td><select onchange="refreshCost()" id="Loot' + i + '"class="Loots" name="dynamic[]">' + lootList + ' </select></td></tr>').fadeIn('slow').appendTo("#UnitTable" + i);
                     i++;
                     refreshCost();
                 },
