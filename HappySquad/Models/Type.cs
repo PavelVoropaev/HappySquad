@@ -6,8 +6,8 @@
     {
         [Description("HQ")]
         HQ,
-        [Description("Trpoops")]
-        Trpoops,
+        [Description("Troops")]
+        Troops,
         [Description("Elite")]
         Elite,
         [Description("Fast Attack")]
