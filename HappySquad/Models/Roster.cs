@@ -4,12 +4,16 @@
     {
         public int Id { get; set; }
 
+        public int RosterId { get; set; }
+
         public string RosterName { get; set; }
 
         public Race Race { get; set; }
 
-        public byte Position { get; set; }
+        public int TotalCost { get; set; }
 
-        public int RelationsId { get; set; }
+        public int UnitId { get; set; }
+
+        public string LootId { get; set; }
     }
 }

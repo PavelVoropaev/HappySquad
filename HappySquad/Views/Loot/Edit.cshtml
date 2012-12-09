@@ -1,7 +1,7 @@
 ﻿@model HappySquad.Models.Loot
 
 @{
-    ViewBag.Title = "Редактирование снаряжения";
+    ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
@@ -18,6 +18,22 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Type)
             @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Range)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Range)
+            @Html.ValidationMessageFor(model => model.Range)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AP)
+            @Html.ValidationMessageFor(model => model.AP)
         </div>
 
         <div class="editor-label">
@@ -92,6 +108,38 @@
             @Html.ValidationMessageFor(model => model.Sv)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ISv)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ISv)
+            @Html.ValidationMessageFor(model => model.ISv)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorF)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorF)
+            @Html.ValidationMessageFor(model => model.ArmorF)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorS)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorS)
+            @Html.ValidationMessageFor(model => model.ArmorS)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorR)
+            @Html.ValidationMessageFor(model => model.ArmorR)
+        </div>
+
         @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
@@ -124,6 +172,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Models)
             @Html.ValidationMessageFor(model => model.Models)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Text)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Text)
+            @Html.ValidationMessageFor(model => model.Text)
         </div>
 
         <p>

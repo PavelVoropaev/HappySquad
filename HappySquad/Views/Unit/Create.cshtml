@@ -13,11 +13,12 @@
 
     <fieldset>
         <legend>Unit</legend>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Race)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"))
+            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
             @Html.ValidationMessageFor(model => model.Race)
         </div>
 
@@ -25,7 +26,7 @@
             @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Type, new SelectList(ViewBag.types, "Value", "Text"))
+            @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
             @Html.ValidationMessageFor(model => model.Type)
         </div>
 
@@ -35,6 +36,22 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+            @Html.ValidationMessageFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ToTroops)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ToTroops)
+            @Html.ValidationMessageFor(model => model.ToTroops)
         </div>
 
         <div class="editor-label">
@@ -110,6 +127,38 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.ISv)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ISv)
+            @Html.ValidationMessageFor(model => model.ISv)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorF)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorF)
+            @Html.ValidationMessageFor(model => model.ArmorF)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorS)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorS)
+            @Html.ValidationMessageFor(model => model.ArmorS)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArmorR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArmorR)
+            @Html.ValidationMessageFor(model => model.ArmorR)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.About)
         </div>
         <div class="editor-field">
@@ -118,19 +167,19 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Cost)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Cost)
-            @Html.ValidationMessageFor(model => model.Cost)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.Models)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Models)
             @Html.ValidationMessageFor(model => model.Models)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Text)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Text)
+            @Html.ValidationMessageFor(model => model.Text)
         </div>
 
         <p>

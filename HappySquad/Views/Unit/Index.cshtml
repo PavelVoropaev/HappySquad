@@ -4,7 +4,7 @@
     ViewBag.Title = "Каталог персоонажей";
 }
 
-<h2>Каталог персоонажей</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -24,31 +24,7 @@
             @Html.DisplayNameFor(model => model.Cost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.S)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.T)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.W)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.I)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.A)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ld)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sv)
+            @Html.DisplayNameFor(model => model.ToTroops)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Models)
@@ -72,40 +48,15 @@
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.S)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.T)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.W)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.I)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.A)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ld)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sv)
+                @Html.DisplayFor(modelItem => item.ToTroops)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Models)
             </td>
             <td>
-                @Html.ActionLink("Редактирвать", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Детали", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                @Html.ActionLink("Добавить лут", "Create", "Relation")
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

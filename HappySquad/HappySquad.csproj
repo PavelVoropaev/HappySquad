@@ -172,6 +172,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211101337567_InitialCreate.cs" />
+    <Compile Include="Migrations\201211101337567_InitialCreate.Designer.cs">
+      <DependentUpon>201211101337567_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212021745262_AddRosterColum.cs" />
+    <Compile Include="Migrations\201212021745262_AddRosterColum.Designer.cs">
+      <DependentUpon>201212021745262_AddRosterColum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212021805204_AddBaseColum.cs" />
+    <Compile Include="Migrations\201212021805204_AddBaseColum.Designer.cs">
+      <DependentUpon>201212021805204_AddBaseColum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212081443474_addToTroops.cs" />
+    <Compile Include="Migrations\201212081443474_addToTroops.Designer.cs">
+      <DependentUpon>201212081443474_addToTroops.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Relation.cs" />
     <Compile Include="Models\DbContext.cs" />
@@ -240,7 +257,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\HappySquad - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -297,16 +316,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Unit\Index.cshtml" />
-    <Content Include="Views\Unit\Details.cshtml" />
-    <Content Include="Views\Unit\Create.cshtml" />
-    <Content Include="Views\Unit\Edit.cshtml" />
-    <Content Include="Views\Unit\Delete.cshtml" />
-    <Content Include="Views\Loot\Index.cshtml" />
-    <Content Include="Views\Loot\Details.cshtml" />
-    <Content Include="Views\Loot\Create.cshtml" />
-    <Content Include="Views\Loot\Edit.cshtml" />
-    <Content Include="Views\Loot\Delete.cshtml" />
     <Content Include="Views\Relation\Index.cshtml" />
     <Content Include="Views\Relation\Details.cshtml" />
     <Content Include="Views\Relation\Create.cshtml" />
@@ -317,12 +326,36 @@
     <Content Include="Views\Roster\Create.cshtml" />
     <Content Include="Views\Roster\Edit.cshtml" />
     <Content Include="Views\Roster\Delete.cshtml" />
+    <Content Include="Views\Loot\Index.cshtml" />
+    <Content Include="Views\Loot\Details.cshtml" />
+    <Content Include="Views\Loot\Create.cshtml" />
+    <Content Include="Views\Loot\Edit.cshtml" />
+    <Content Include="Views\Loot\Delete.cshtml" />
+    <Content Include="Views\Unit\Index.cshtml" />
+    <Content Include="Views\Unit\Details.cshtml" />
+    <Content Include="Views\Unit\Create.cshtml" />
+    <Content Include="Views\Unit\Edit.cshtml" />
+    <Content Include="Views\Unit\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201211101337567_InitialCreate.resx">
+      <DependentUpon>201211101337567_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212021745262_AddRosterColum.resx">
+      <DependentUpon>201212021745262_AddRosterColum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212021805204_AddBaseColum.resx">
+      <DependentUpon>201212021805204_AddBaseColum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212081443474_addToTroops.resx">
+      <DependentUpon>201212081443474_addToTroops.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

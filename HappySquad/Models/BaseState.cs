@@ -20,6 +20,14 @@ namespace HappySquad.Models
 
         public byte Sv { get; set; }
 
+        public byte ISv { get; set; }
+
+        public byte ArmorF { get; set; }
+
+        public byte ArmorS { get; set; }
+
+        public byte ArmorR { get; set; }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -29,5 +37,7 @@ namespace HappySquad.Models
         public double Cost { get; set; }
 
         public int Models { get; set; }
+
+        public string Text { get; set; }
     }
 }

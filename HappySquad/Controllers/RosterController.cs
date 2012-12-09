@@ -81,7 +81,7 @@
         [HttpPost]
         public ActionResult SetUnitByPos(string pos, string id)
         {
-            var roster = new Roster { Position = Convert.ToByte(pos), RelationsId = Convert.ToInt32(id) };
+            var roster = new Roster { UnitId = Convert.ToInt32(id) };
             this.db.Rosters.Add(roster);
             this.db.SaveChanges();
             return Json(roster);
@@ -110,7 +110,6 @@
                             {
                                 Race = (Race)Convert.ToByte(race),
                                 Id = Convert.ToInt32(unitId),
-                                Position = i,
                                 RosterName = name
                             });
                 }

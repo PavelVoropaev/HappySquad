@@ -1,7 +1,7 @@
 ﻿@model HappySquad.Models.Loot
 
 @{
-    ViewBag.Title = "Удалить?";
+    ViewBag.Title = "Delete";
 }
 
 <h2>Delete</h2>
@@ -15,6 +15,20 @@
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Type)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Range)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Range)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AP)
     </div>
 
     <div class="display-label">
@@ -81,6 +95,34 @@
     </div>
 
     <div class="display-label">
+         @Html.DisplayNameFor(model => model.ISv)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ISv)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorF)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorF)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorS)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorS)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorR)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorR)
+    </div>
+
+    <div class="display-label">
          @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
@@ -106,6 +148,13 @@
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Models)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Text)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Text)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

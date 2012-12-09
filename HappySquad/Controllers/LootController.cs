@@ -13,13 +13,13 @@
         // GET: /Loot/
         public ActionResult Index()
         {
-            return View(this.db.Loots.ToList());
+            return View(db.Loots.ToList());
         }
 
         // GET: /Loot/Details/5
         public ActionResult Details(int id = 0)
         {
-            var loot = this.db.Loots.Find(id);
+            Loot loot = db.Loots.Find(id);
             if (loot == null)
             {
                 return HttpNotFound();
@@ -40,8 +40,8 @@
         {
             if (ModelState.IsValid)
             {
-                this.db.Loots.Add(loot);
-                this.db.SaveChanges();
+                db.Loots.Add(loot);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -51,7 +51,7 @@
         // GET: /Loot/Edit/5
         public ActionResult Edit(int id = 0)
         {
-            Loot loot = this.db.Loots.Find(id);
+            Loot loot = db.Loots.Find(id);
             if (loot == null)
             {
                 return HttpNotFound();
@@ -66,8 +66,8 @@
         {
             if (ModelState.IsValid)
             {
-                this.db.Entry(loot).State = EntityState.Modified;
-                this.db.SaveChanges();
+                db.Entry(loot).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -77,7 +77,7 @@
         // GET: /Loot/Delete/5
         public ActionResult Delete(int id = 0)
         {
-            var loot = this.db.Loots.Find(id);
+            Loot loot = db.Loots.Find(id);
             if (loot == null)
             {
                 return HttpNotFound();
@@ -90,15 +90,15 @@
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var loot = this.db.Loots.Find(id);
-            this.db.Loots.Remove(loot);
-            this.db.SaveChanges();
+            Loot loot = db.Loots.Find(id);
+            db.Loots.Remove(loot);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            this.db.Dispose();
+            db.Dispose();
             base.Dispose(disposing);
         }
     }

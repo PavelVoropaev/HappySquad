@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<HappySquad.Models.Loot>
 
 @{
-    ViewBag.Title = "Каталог снаряжения";
+    ViewBag.Title = "Index";
 }
 
-<h2>Каталог снаряжения</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -14,42 +14,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Cost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.S)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.T)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.W)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.I)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.A)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ld)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sv)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Models)
+            @Html.DisplayNameFor(model => model.Type)
         </th>
         <th></th>
     </tr>
@@ -61,40 +30,10 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.S)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.T)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.W)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.I)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.A)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ld)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Models)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

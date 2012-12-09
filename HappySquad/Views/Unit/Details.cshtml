@@ -1,13 +1,20 @@
 ﻿@model HappySquad.Models.Unit
 
 @{
-    ViewBag.Title = "Каталог персоонажей";
+    ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
 
 <fieldset>
     <legend>Unit</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ToTroops)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ToTroops)
+    </div>
 
     <div class="display-label">
          @Html.DisplayNameFor(model => model.WS)
@@ -73,6 +80,34 @@
     </div>
 
     <div class="display-label">
+         @Html.DisplayNameFor(model => model.ISv)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ISv)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorF)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorF)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorS)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorS)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ArmorR)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArmorR)
+    </div>
+
+    <div class="display-label">
          @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
@@ -98,6 +133,13 @@
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Models)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Text)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Text)
     </div>
 </fieldset>
 <p>

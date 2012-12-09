@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Relation
     {
@@ -32,7 +31,7 @@
         {
             get
             {
-                if (string.IsNullOrEmpty(AddLootId))
+                if (string.IsNullOrEmpty(this.AddLootId))
                 {
                     return new List<string>();
                 }
@@ -55,12 +54,11 @@
             }
         }
 
-
         public List<string> ExLootName
         {
             get
             {
-                if (string.IsNullOrEmpty(ExLootId))
+                if (string.IsNullOrEmpty(this.ExLootId))
                 {
                     return new List<string>();
                 }
