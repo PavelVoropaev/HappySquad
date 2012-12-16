@@ -258,8 +258,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\HappySquad - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />

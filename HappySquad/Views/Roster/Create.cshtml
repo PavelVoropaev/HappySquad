@@ -116,6 +116,7 @@
         var eliteCount = 0;
         var heavyCount = 0;
         var fastCount = 0;
+        var toTroopsCount = 0;
 
         var hqCost = 0;
         var troopsCost = 0;
@@ -126,17 +127,17 @@
 
         //-----------------------------------
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             addUnit("HQ");
             addUnit("Troops");
             addUnit("Troops");
             raceId = 0;
 
-            $('.submit').click(function() {
+            $('.submit').click(function () {
 
                 var unitsId = [];
                 var lottId = [];
-                $('select').each(function() {
+                $('select').each(function () {
                     if (this.className == "Units")
                         unitsId.push(this.options[this.selectedIndex].id);
                     else if (this.className == "Loots") {
@@ -165,31 +166,27 @@
 
         });
 
-        // ----------------------------------------------------------------------------------------------
-        // Удалятор чойсов (В вархаммере занятая ячейка организации армии называется чойсом (англ. Choice))
-        // -----------------------------------------------------------------------------------------------
-
         function remove(type) {
 
             switch (type) {
-            case "HQ":
-                if (hqCount > 0) hqCount--;
-                break;
-            case "Troops":
-                if (troopCount > 0) troopCount--;
-                break;
-            case "Elite":
-                if (eliteCount > 0) eliteCount--;
-                break;
-            case "HeavySupport":
-                if (heavyCount > 0) heavyCount--;
-                break;
-            case "FastAttack":
-                if (fastCount > 0) fastCount--;
-                break;
-            default:
-                ;
-                break;
+                case "HQ":
+                    if (hqCount > 0) hqCount--;
+                    break;
+                case "Troops":
+                    if (troopCount > 0) troopCount--;
+                    break;
+                case "Elite":
+                    if (eliteCount > 0) eliteCount--;
+                    break;
+                case "HeavySupport":
+                    if (heavyCount > 0) heavyCount--;
+                    break;
+                case "FastAttack":
+                    if (fastCount > 0) fastCount--;
+                    break;
+                default:
+                    ;
+                    break;
             }
 
             $('.' + type).children().last().remove();
@@ -214,17 +211,58 @@
             addUnit("Troops");
         }
 
-        function changeUnit(pos) {
-                var table = document.getElementById(pos + "Table");
-                var rowCount = table.rows.length;
-                while (rowCount > 1) {
-                    table.deleteRow(rowCount - 1);
-                    rowCount--;
+        function changeUnit(unitId, unitType) {
+            var table = document.getElementById(unitId + "Table");
+            var rowCount = table.rows.length;
+            while (rowCount > 1) {
+                table.deleteRow(rowCount - 1);
+                rowCount--;
             }
-            refreshCost(pos);
+
+            if (unitType == 'HQ') {
+                var totroops;
+                $("#" + unitId).each(function () {
+                    totroops = this.options[this.selectedIndex].attributes.totroops.nodeValue;
+                });
+                while (toTroopsCount > 0) {
+                    $('select').each(function () {
+                        if (this.className.toString().indexOf("Unit") != -1 && this.attributes.UnitType.nodeValue.indexOf("Troops") != -1) {
+                            $("#" + this.id + " :last").remove();
+                            toTroopsCount--;
+                        }
+                    });
+                }
+
+                if (totroops.length != 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/Roster/GetUnitById",
+                        data: {
+                            unitId: totroops,
+                        },
+                        success: function (data) {
+                            if (data.length != 0) {
+                                var unitList = "";
+                                $.each(data, function () {
+                                    unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '"ToTroops="' + this.ToTroops + '">' + this.Name + '</option>';
+                                });
+                                $('select').each(function () {
+                                    if (this.className.toString().indexOf("Unit") != -1 && this.attributes.UnitType.nodeValue.indexOf("Troops") != -1) {
+                                        $("#" + this.id).append($(unitList));
+                                    }
+
+                                });
+                                toTroopsCount++;
+                            }
+                        },
+                        dataType: "json"
+                    });
+                }
+            }
+            refreshCost(unitId);
         }
 
-        function refreshCost(pos) {
+        function refreshCost(curId) {
 
             TotalCost = 0;
             hqCost = 0;
@@ -233,28 +271,28 @@
             heavyCost = 0;
             fastCost = 0;
             var curCost = 0;
-            $('select').each(function() {
+            $('select').each(function () {
                 if (this.className.toString().indexOf("Unit") != -1 || this.className.toString().indexOf("Loot") != -1) {
 
                     switch (this.attributes.UnitType.nodeValue) {
-                    case "HQ":
-                        hqCost += parseInt(this.options[this.selectedIndex].value);
-                        break;
-                    case "Troops":
-                        troopsCost += parseInt(this.options[this.selectedIndex].value);
-                        break;
-                    case "Elite":
-                        eliteCost += parseInt(this.options[this.selectedIndex].value);
-                        break;
-                    case "HeavySupport":
-                        heavyCost += parseInt(this.options[this.selectedIndex].value);
-                        break;
-                    case "FastAttack":
-                        fastCost += parseInt(this.options[this.selectedIndex].value);
-                        break;
+                        case "HQ":
+                            hqCost += parseInt(this.options[this.selectedIndex].value);
+                            break;
+                        case "Troops":
+                            troopsCost += parseInt(this.options[this.selectedIndex].value);
+                            break;
+                        case "Elite":
+                            eliteCost += parseInt(this.options[this.selectedIndex].value);
+                            break;
+                        case "HeavySupport":
+                            heavyCost += parseInt(this.options[this.selectedIndex].value);
+                            break;
+                        case "FastAttack":
+                            fastCost += parseInt(this.options[this.selectedIndex].value);
+                            break;
                     }
 
-                    if (this.id == pos) {
+                    if (this.id == curId) {
                         curCost = this.value;
                     }
                 }
@@ -270,16 +308,13 @@
             $("#HeavySupportCost").append('Цена за Heavy Support: ' + heavyCost);
             $("#FastAttackCost").text("");
             $("#FastAttackCost").append('Цена за Fast Attack: ' + fastCost);
-            $("#" + pos + "Cost").text("");
-            $("#" + pos + "Cost").append('Points: ' + curCost);
+            $("#" + curId + "Cost").text("");
+            $("#" + curId + "Cost").append('Points: ' + curCost);
             $("#Totalcost").text("");
             $("#Totalcost").append('Цена за ростер: ' + TotalCost);
         }
 
         function addUnit(unitType) {
-            //--------------------------------
-            //проверятор сколько можно добавить
-            //-------------------------------
 
             if ((unitType == "HQ" && hqCount < maxHqCount) ||
                 (unitType == "Troops" && troopCount < maxTroopCount) ||
@@ -293,39 +328,39 @@
                         race: raceId,
                         type: unitType
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.length != 0) {
                             var unitList = "";
                             var addLootButton = '<input type="button" onclick="addLoot(' + UnitPos + ', \'' + unitType + '\')" value="Добавить Лута" />';
                             var curCost = data[0].Cost;
-                            $.each(data, function() {
-                                unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '">' + this.Name + '</option>';
+                            $.each(data, function () {
+                                unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '"ToTroops="' + this.ToTroops + '">' + this.Name + '</option>';
                             });
                             $('<table id = "Unit' + UnitPos + 'Table" class="UnitsTable"  name="dynamic[]" >  <tr>' +
-                                '<td><select onchange="changeUnit(\'Unit' + UnitPos + '\')" id="Unit' + UnitPos + '"class="Units" UnitType = "' + unitType + '" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td> <td id="Unit' + UnitPos + 'Cost">Points: ' + curCost + '</td>' +
+                                '<td><select onchange="changeUnit(\'Unit' + UnitPos + '\',\'' + unitType + '\')" id="Unit' + UnitPos + '"class="Units" UnitType = "' + unitType + '" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td> <td id="Unit' + UnitPos + 'Cost">Points: ' + curCost + '</td>' +
                                 ' </tr></table>').fadeIn('slow').appendTo('.' + unitType);
                             refreshCost('Unit' + UnitPos);
                             UnitPos++;
 
                             switch (unitType) {
-                            case "HQ":
-                                hqCount++;
-                                break;
-                            case "Troops":
-                                troopCount++;
-                                break;
-                            case "Elite":
-                                eliteCount++;
-                                break;
-                            case "HeavySupport":
-                                heavyCount++;
-                                break;
-                            case "FastAttack":
-                                fastCount++;
-                                break;
-                            default:
-                                ;
-                                break;
+                                case "HQ":
+                                    hqCount++;
+                                    break;
+                                case "Troops":
+                                    troopCount++;
+                                    break;
+                                case "Elite":
+                                    eliteCount++;
+                                    break;
+                                case "HeavySupport":
+                                    heavyCount++;
+                                    break;
+                                case "FastAttack":
+                                    fastCount++;
+                                    break;
+                                default:
+                                    ;
+                                    break;
                             }
                         }
                     },
@@ -336,18 +371,25 @@
 
         function addLoot(unitPos, unitType) {
             var unitId = $('#Unit' + unitPos + ' option:selected').attr("UnitId");
+            var lootId = [];
+            $('select').each(function () {
+                if (this.className.toString().indexOf("Loot") != -1 && this.attributes.Owner.nodeValue == "Unit" + unitPos) {
+                    lootId.push(this.options[this.selectedIndex].attributes.Lootid.nodeValue);
+                }
+            });
 
             $.ajax({
                 type: 'POST',
                 url: "/Roster/AddLoot",
                 data: {
-                    unitId: unitId
+                    unitId: unitId,
+                    lootIds: lootId.toString()
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.length != 0) {
                         var curCost = data[0].Cost;
                         var lootList = "";
-                        $.each(data, function() {
+                        $.each(data, function () {
                             lootList = lootList + '<option value="' + this.Cost + '"Lootid="' + this.Id + '">' + this.Name + '</option>';
                         });
 
@@ -359,5 +401,6 @@
                 dataType: "json"
             });
         }
+
     </script>
-} 
+}

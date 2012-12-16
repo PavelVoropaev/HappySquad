@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Relation
     {
@@ -16,6 +17,36 @@
         public string AddLootId { get; set; }
 
         public string ExLootId { get; set; }
+
+        public List<int> ExLootIdList
+        {
+            get
+            {
+                try
+                {
+                    return this.ExLootId.Split(',').Select(value => Convert.ToInt32(value)).ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<int>();
+                }
+            }
+        }
+
+        public List<int> AddLootIdList
+        {
+            get
+            {
+                try
+                {
+                    return this.AddLootId.Split(',').Select(value => Convert.ToInt32(value)).ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<int>();
+                }
+            }
+        }
 
         public string UnitName
         {
@@ -46,10 +77,10 @@
                     }
                     catch
                     {
-                         result.Add("Нет такого лута!");
+                        result.Add("Нет такого лута!");
                     }
                 }
-                
+
                 return result;
             }
         }

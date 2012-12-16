@@ -3,13 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
 
     using HappySquad.Models;
 
-    [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1512:SingleLineCommentsMustNotBeFollowedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
     public class RosterController : Controller
     {
         private readonly HappyDbContext db = new HappyDbContext();
@@ -52,9 +50,9 @@
             ViewBag.lootList = this.db.Loots.AsEnumerable().Select(
                 loot => new SelectListItem
                             {
-                                    Text = loot.Name,
-                                    Value = loot.Id.ToString()
-                                });
+                                Text = loot.Name,
+                                Value = loot.Id.ToString()
+                            });
             return View();
         }
 
@@ -66,33 +64,42 @@
         }
 
         [HttpPost]
-        public ActionResult AddLoot(string unitId)
+        public ActionResult AddLoot(string unitId, string lootIds)
         {
-            var loots = new List<Loot>();
-            var relations = this.db.Relations.AsEnumerable().Where(relation => relation.UnitId == Convert.ToByte(unitId)).ToList();
-            foreach (var relation in relations)
+            var equippedLoots = new List<int>();
+            if (!string.IsNullOrEmpty(lootIds))
             {
-                loots.AddRange(this.db.Loots.Where(loot => loot.Id == relation.LootId));
+                equippedLoots = lootIds.Split(',').Select(value => Convert.ToInt32(value)).ToList();
             }
 
-            return Json(loots);
+            var relations = this.db.Relations.AsEnumerable().Where(relation => relation.UnitId == Convert.ToByte(unitId)).ToList();
+            var mayEquippedLootsId = relations.Select(relation => relation.LootId).ToList();
+            foreach (var relation in relations)
+            {
+                if (equippedLoots.Contains(relation.LootId))
+                {
+                    mayEquippedLootsId.AddRange(relation.AddLootIdList);
+                    foreach (var i in relation.ExLootIdList)
+                    {
+                        mayEquippedLootsId.Remove(i);
+                    }
+                }
+            }
+
+            var mayEquippedLoots = new List<Loot>();
+            foreach (var lootId in mayEquippedLootsId.Distinct())
+            {
+                mayEquippedLoots.AddRange(this.db.Loots.Where(loot => loot.Id == lootId));
+            }
+
+            return Json(mayEquippedLoots);
         }
 
         [HttpPost]
-        public ActionResult SetUnitByPos(string pos, string id)
+        public ActionResult GetUnitById(string unitId)
         {
-            var roster = new Roster { UnitId = Convert.ToInt32(id) };
-            this.db.Rosters.Add(roster);
-            this.db.SaveChanges();
-            return Json(roster);
-        }
-
-        [HttpPost]
-        public ActionResult GetCostById(string id)
-        {
-            var units = this.db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == id).ToList();
-            var firstOrDefault = units.FirstOrDefault();
-            return Json(firstOrDefault != null ? firstOrDefault.Cost : 0);
+            var units = this.db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == unitId).ToList();
+            return Json(units);
         }
 
         [HttpPost]
