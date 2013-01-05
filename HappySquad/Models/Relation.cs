@@ -69,7 +69,7 @@
         {
             get
             {
-                return DbHelper.GetLootNameById(this.UnitId);
+                return DbHelper.GetLootNameById(this.LootId);
             }
         }
 
