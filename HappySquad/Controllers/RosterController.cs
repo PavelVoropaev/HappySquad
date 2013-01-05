@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
+    using HappySquad.Helpers;
     using HappySquad.Models;
 
     public class RosterController : Controller
@@ -33,26 +34,7 @@
         // GET: /Roster/Create
         public ActionResult Create()
         {
-            ViewBag.races = from Race n in Enum.GetValues(typeof(Race))
-                            select new SelectListItem
-                            {
-                                Value = Convert.ToInt16(n).ToString(),
-                                Text = HappySquad.Content.Helpers.EnumHelper.GetEnumDescription(n),
-                            };
-
-            ViewBag.unitList = this.db.Units.AsEnumerable().Select(
-                unit => new SelectListItem
-                            {
-                                Text = unit.Name,
-                                Value = unit.Id.ToString()
-                            });
-
-            ViewBag.lootList = this.db.Loots.AsEnumerable().Select(
-                loot => new SelectListItem
-                            {
-                                Text = loot.Name,
-                                Value = loot.Id.ToString()
-                            });
+            ViewBag.races = DbHelper.GetRaceSelectList();
             return View();
         }
 
@@ -78,10 +60,10 @@
             {
                 if (equippedLoots.Contains(relation.LootId))
                 {
-                    mayEquippedLootsId.AddRange(relation.AddLootIdList);
-                    foreach (var i in relation.ExLootIdList)
+                    mayEquippedLootsId.AddRange(relation.AddLootIdArray.Select(value => Convert.ToInt32(value)).ToList());
+                    foreach (var i in relation.ExLootIdArray)
                     {
-                        mayEquippedLootsId.Remove(i);
+                        mayEquippedLootsId.Remove(Convert.ToInt32(i));
                     }
                 }
             }
@@ -108,10 +90,8 @@
             if (ModelState.IsValid)
             {
                 var unitsIdList = unitsId.Split(',');
-                byte i = 0;
                 foreach (var unitId in unitsIdList)
                 {
-                    i++;
                     this.db.Rosters.Add(
                         new Roster
                             {
@@ -130,7 +110,7 @@
         }
 
         // GET: /Roster/Edit/5
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(int id)
         {
             Roster roster = this.db.Rosters.Find(id);
             if (roster == null)

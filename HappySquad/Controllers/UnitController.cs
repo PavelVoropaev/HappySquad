@@ -2,9 +2,11 @@
 {
     using System.Data;
     using System.Data.Entity;
+    using System.Data.Objects.SqlClient;
     using System.Linq;
     using System.Web.Mvc;
 
+    using HappySquad.Helpers;
     using HappySquad.Migrations;
     using HappySquad.Models;
 
@@ -38,6 +40,8 @@
         // GET: /Unit/Create
         public ActionResult Create()
         {
+            ViewBag.races = DbHelper.GetRaceSelectList();
+            ViewBag.unitList = this.db.Units.Select(t => new SelectListItem { Text = t.Name, Value = SqlFunctions.StringConvert((double)t.Id).Trim() }).ToList();
             return View();
         }
 
@@ -64,6 +68,7 @@
                 return HttpNotFound();
             }
 
+            ViewBag.races = DbHelper.GetRaceSelectList();
             return View(unit);
         }
 

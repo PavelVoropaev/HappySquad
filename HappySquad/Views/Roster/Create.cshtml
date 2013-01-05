@@ -337,7 +337,7 @@
                                 unitList = unitList + '<option value="' + this.Cost + '"UnitId="' + this.Id + '"ToTroops="' + this.ToTroops + '">' + this.Name + '</option>';
                             });
                             $('<table id = "Unit' + UnitPos + 'Table" class="UnitsTable"  name="dynamic[]" >  <tr>' +
-                                '<td><select onchange="changeUnit(\'Unit' + UnitPos + '\',\'' + unitType + '\')" id="Unit' + UnitPos + '"class="Units" UnitType = "' + unitType + '" name="dynamic[]">' + unitList + ' </select></td><td>' + addLootButton + '</td> <td id="Unit' + UnitPos + 'Cost">Points: ' + curCost + '</td>' +
+                                '<td><select onchange="changeUnit(\'Unit' + UnitPos + '\',\'' + unitType + '\')" id="Unit' + UnitPos + '"class="Units" UnitType = "' + unitType + '" name="dynamic[]" style="width: 150px;">' + unitList + ' </select></td><td>' + addLootButton + '</td> <td id="Unit' + UnitPos + 'Cost">Points: ' + curCost + '</td>' +
                                 ' </tr></table>').fadeIn('slow').appendTo('.' + unitType);
                             refreshCost('Unit' + UnitPos);
                             UnitPos++;

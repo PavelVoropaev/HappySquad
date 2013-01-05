@@ -18,7 +18,7 @@
             @Html.LabelFor(model => model.UnitId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.UnitId)
+            @Html.DropDownList("UnitId", new SelectList(ViewBag.unitList, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.UnitId)
         </div>
 
@@ -26,26 +26,25 @@
             @Html.LabelFor(model => model.LootId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LootId)
+            @Html.DropDownList("LootId", new SelectList(ViewBag.lootList, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.LootId)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AddLootId)
+                <div class="editor-label">
+            @Html.LabelFor(model => model.AddLootName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.AddLootId)
-            @Html.ValidationMessageFor(model => model.AddLootId)
+            @Html.ListBoxFor(x => x.AddLootIdArray, new SelectList(ViewBag.lootList, "Value", "Text"))
+            @Html.ValidationMessageFor(model => model.AddLootName)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ExLootId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ExLootId)
+            @Html.ListBoxFor(x => x.ExLootIdArray, new SelectList(ViewBag.lootList, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.ExLootId)
         </div>
-
         <p>
             <input type="submit" value="Save" />
         </p>

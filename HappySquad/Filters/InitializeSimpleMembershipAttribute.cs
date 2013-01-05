@@ -23,9 +23,9 @@
             LazyInitializer.EnsureInitialized(ref initializer, ref isInitialized, ref initializerLock);
         }
 
-        private class SimpleMembershipInitializer
+        private abstract class SimpleMembershipInitializer
         {
-            public SimpleMembershipInitializer()
+            protected SimpleMembershipInitializer()
             {
                 Database.SetInitializer<UsersContext>(null);
 

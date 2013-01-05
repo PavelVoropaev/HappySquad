@@ -2,7 +2,7 @@ namespace HappySquad.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<HappySquad.Models.HappyDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Models.HappyDbContext>
     {
         public Configuration()
         {

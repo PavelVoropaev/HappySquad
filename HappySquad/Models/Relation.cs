@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using HappySquad.Helpers;
 
     public class Relation
     {
-        private readonly HappyDbContext db = new HappyDbContext();
-
         public int Id { get; set; }
 
         public int UnitId { get; set; }
@@ -18,62 +17,77 @@
 
         public string ExLootId { get; set; }
 
-        public List<int> ExLootIdList
+        public string[] AddLootIdArray
         {
             get
             {
                 try
                 {
-                    return this.ExLootId.Split(',').Select(value => Convert.ToInt32(value)).ToList();
+                    return this.AddLootId.Split(',').ToArray();
                 }
                 catch (Exception)
                 {
-                    return new List<int>();
+                    return new string[0];
                 }
+            }
+
+            set
+            {
+                this.AddLootId = string.Join(",", value);
             }
         }
 
-        public List<int> AddLootIdList
+        public string[] ExLootIdArray
         {
             get
             {
                 try
                 {
-                    return this.AddLootId.Split(',').Select(value => Convert.ToInt32(value)).ToList();
+                    return this.ExLootId.Split(',').ToArray();
                 }
                 catch (Exception)
                 {
-                    return new List<int>();
+                    return new string[0];
                 }
+            }
+
+            set
+            {
+                this.ExLootId = string.Join(",", value);
             }
         }
 
         public string UnitName
         {
-            get { return this.db.Units.Find(this.UnitId).Name; }
+            get
+            {
+                return DbHelper.GetUnitNameById(this.UnitId);
+            }
         }
 
         public string LootName
         {
-            get { return this.db.Loots.Find(this.LootId).Name; }
+            get
+            {
+                return DbHelper.GetLootNameById(this.UnitId);
+            }
         }
 
         public List<string> AddLootName
         {
             get
             {
-                if (string.IsNullOrEmpty(this.AddLootId))
+                if (this.AddLootId == null)
                 {
                     return new List<string>();
                 }
 
-                var addLootIds = this.AddLootId.Split(',');
                 var result = new List<string>();
-                foreach (var id in addLootIds)
+                foreach (var id in this.AddLootIdArray)
                 {
                     try
                     {
-                        result.Add(this.db.Loots.Find(Convert.ToInt32(id)).Name);
+                        result.Add(DbHelper.GetLootNameById(Convert.ToInt32(id)));
                     }
                     catch
                     {
@@ -89,18 +103,17 @@
         {
             get
             {
-                if (string.IsNullOrEmpty(this.ExLootId))
+                if (this.ExLootId == null)
                 {
                     return new List<string>();
                 }
 
-                var exLootIds = this.ExLootId.Split(',');
                 var result = new List<string>();
-                foreach (var id in exLootIds)
+                foreach (var id in this.ExLootIdArray)
                 {
                     try
                     {
-                        result.Add(this.db.Loots.Find(Convert.ToInt32(id)).Name);
+                        result.Add(DbHelper.GetLootNameById(Convert.ToInt32(id)));
                     }
                     catch
                     {

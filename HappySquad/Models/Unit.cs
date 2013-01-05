@@ -6,6 +6,6 @@
 
         public Race Race { get; set; }
 
-        public string ToTroops { get; set; }
+        public int? ToTroops { get; set; }
     }
 }

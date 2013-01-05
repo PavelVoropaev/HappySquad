@@ -18,7 +18,7 @@
             @Html.LabelFor(model => model.Race)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Race, new SelectList(Enum.GetValues(typeof(Race))))
+            @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"))
             @Html.ValidationMessageFor(model => model.Race)
         </div>
 
@@ -28,6 +28,14 @@
         <div class="editor-field">
             @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
             @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ToTroops)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ToTroops", new SelectList(ViewBag.unitList, "Value", "Text" ),new { @disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.ToTroops)
         </div>
 
         <div class="editor-label">
@@ -44,14 +52,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Cost)
             @Html.ValidationMessageFor(model => model.Cost)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ToTroops)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ToTroops)
-            @Html.ValidationMessageFor(model => model.ToTroops)
         </div>
 
         <div class="editor-label">
@@ -173,15 +173,6 @@
             @Html.EditorFor(model => model.Models)
             @Html.ValidationMessageFor(model => model.Models)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Text)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Text)
-            @Html.ValidationMessageFor(model => model.Text)
-        </div>
-
         <p>
             <input type="submit" value="Create" />
         </p>

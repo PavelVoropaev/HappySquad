@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<HappySquad.Models.Loot>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Каталог снаряжения";
 }
 
-<h2>Index</h2>
+<h2>Каталог снаряжения</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить снаряжение", "Create")
 </p>
-<table>
+<table >
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -37,7 +37,6 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

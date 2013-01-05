@@ -37,7 +37,5 @@ namespace HappySquad.Models
         public double Cost { get; set; }
 
         public int Models { get; set; }
-
-        public string Text { get; set; }
     }
 }

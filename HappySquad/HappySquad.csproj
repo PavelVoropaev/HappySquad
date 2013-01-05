@@ -161,7 +161,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Content\Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LootController.cs" />
@@ -172,6 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DbHelper.cs" />
     <Compile Include="Migrations\201211101337567_InitialCreate.cs" />
     <Compile Include="Migrations\201211101337567_InitialCreate.Designer.cs">
       <DependentUpon>201211101337567_InitialCreate.cs</DependentUpon>
@@ -187,6 +188,10 @@
     <Compile Include="Migrations\201212081443474_addToTroops.cs" />
     <Compile Include="Migrations\201212081443474_addToTroops.Designer.cs">
       <DependentUpon>201212081443474_addToTroops.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301041217411_delText.cs" />
+    <Compile Include="Migrations\201301041217411_delText.Designer.cs">
+      <DependentUpon>201301041217411_delText.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -259,9 +264,11 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\HappySquad - FTP %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -357,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212081443474_addToTroops.resx">
       <DependentUpon>201212081443474_addToTroops.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301041217411_delText.resx">
+      <DependentUpon>201301041217411_delText.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

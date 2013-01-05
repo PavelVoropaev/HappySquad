@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<HappySquad.Models.Unit>
 
 @{
-    ViewBag.Title = "Каталог персоонажей";
+    ViewBag.Title = "Каталог Юнитов";
 }
 
-<h2>Index</h2>
+<h2>Каталог Юнитов</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить Юнита", "Create")
 </p>
 <table>
     <tr>
@@ -55,7 +55,6 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

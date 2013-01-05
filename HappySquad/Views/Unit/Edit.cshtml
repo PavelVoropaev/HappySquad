@@ -1,4 +1,5 @@
-﻿@model HappySquad.Models.Unit
+﻿@using HappySquad.Models
+@model Unit
 
 @{
     ViewBag.Title = "Edit";
@@ -6,11 +7,28 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Unit</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Race)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Race, new SelectList(ViewBag.races, "Value", "Text"))
+            @Html.ValidationMessageFor(model => model.Race)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetValues(typeof(HappySquad.Models.Type))))
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ToTroops)
@@ -157,15 +175,6 @@
             @Html.EditorFor(model => model.Models)
             @Html.ValidationMessageFor(model => model.Models)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Text)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Text)
-            @Html.ValidationMessageFor(model => model.Text)
-        </div>
-
         <p>
             <input type="submit" value="Save" />
         </p>

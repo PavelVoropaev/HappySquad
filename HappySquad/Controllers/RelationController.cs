@@ -1,7 +1,7 @@
 ﻿namespace HappySquad.Controllers
 {
-    using System.Collections.Generic;
     using System.Data;
+    using System.Data.Objects.SqlClient;
     using System.Linq;
     using System.Web.Mvc;
     using HappySquad.Models;
@@ -31,23 +31,9 @@
         // GET: /Relation/Create
         public ActionResult Create()
         {
-            var units = new List<SelectListItem>();
-            foreach (var t in this.db.Units)
-            {
-                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
-                units.Add(s);
-            }
+            this.ViewBag.unitList = this.db.Units.Select(t => new SelectListItem { Text = t.Name, Value = SqlFunctions.StringConvert((double)t.Id).Trim() }).ToList();
+            this.ViewBag.lootList = this.db.Loots.Select(t => new SelectListItem { Text = t.Name, Value = SqlFunctions.StringConvert((double)t.Id).Trim() }).ToList();
 
-            ViewBag.unitList = units;
-
-            var loots = new List<SelectListItem>();
-            foreach (var t in this.db.Loots)
-            {
-                var s = new SelectListItem { Text = t.Name, Value = t.Id.ToString() };
-                loots.Add(s);
-            }
-
-            ViewBag.lootList = loots;
             return View();
         }
 
@@ -68,11 +54,14 @@
         // GET: /Relation/Edit/5
         public ActionResult Edit(int id = 0)
         {
-            Relation relation = this.db.Relations.Find(id);
+            var relation = this.db.Relations.Find(id);
             if (relation == null)
             {
                 return HttpNotFound();
             }
+
+            this.ViewBag.unitList = this.db.Units.Select(t => new SelectListItem { Text = t.Name, Value = SqlFunctions.StringConvert((double)t.Id).Trim() }).ToList();
+            this.ViewBag.lootList = this.db.Loots.Select(t => new SelectListItem { Text = t.Name, Value = SqlFunctions.StringConvert((double)t.Id).Trim() }).ToList();
 
             return View(relation);
         }
