@@ -1,12 +1,13 @@
 ﻿@model HappySquad.Models.Loot
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Радактировать снаряжение";
 }
 
-<h2>Edit</h2>
+<h2>Радактировать снаряжение</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -174,14 +175,12 @@
             @Html.ValidationMessageFor(model => model.Models)
         </div>
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Сохранить" />
+            @Html.ActionLink("Назад", "Index")
+            @Html.ActionLink("Удалить", "Delete", new { id = Model.Id })
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

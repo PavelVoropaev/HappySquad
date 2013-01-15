@@ -210,6 +210,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\themes\base\images\back_disabled.png" />
+    <Content Include="Content\themes\base\images\back_enabled.png" />
+    <Content Include="Content\themes\base\images\back_enabled_hover.png" />
+    <Content Include="Content\themes\base\images\favicon.ico" />
+    <Content Include="Content\themes\base\images\forward_disabled.png" />
+    <Content Include="Content\themes\base\images\forward_enabled.png" />
+    <Content Include="Content\themes\base\images\forward_enabled_hover.png" />
+    <Content Include="Content\themes\base\images\sort_asc.png" />
+    <Content Include="Content\themes\base\images\sort_asc_disabled.png" />
+    <Content Include="Content\themes\base\images\sort_both.png" />
+    <Content Include="Content\themes\base\images\sort_desc.png" />
+    <Content Include="Content\themes\base\images\sort_desc_disabled.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -266,6 +280,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\themes\base\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\HappySquad - FTP %284%29.pubxml" />
@@ -279,8 +294,6 @@
     <Content Include="Images\cross.png" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.20.js" />
-    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

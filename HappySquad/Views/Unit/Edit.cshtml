@@ -184,6 +184,9 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<div>
+    @Html.ActionLink("Delete", "Delete", new { Model.Id })
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -1,5 +1,7 @@
 namespace HappySquad.Models
 {
+    using System.ComponentModel;
+
     public class BaseState
     {
         public byte WS { get; set; }
@@ -30,12 +32,16 @@ namespace HappySquad.Models
 
         public int Id { get; set; }
 
+        [DisplayName("Название")]
         public string Name { get; set; }
 
+        [DisplayName("Описание")]
         public string About { get; set; }
-
+        
+        [DisplayName("Цена")]
         public double Cost { get; set; }
 
+        [DisplayName("Количество моделей")]
         public int Models { get; set; }
     }
 }
