@@ -151,7 +151,6 @@
                 alert("Id Unit:" + unitsId);
                 var rosterName = $("#RosterName").val();
                 $.ajax({
-                    type: 'POST',
                     url: "/Roster/Create",
                     data: {
                         raceId: raceId,
@@ -235,7 +234,6 @@
 
                 if (totroops.length != 0) {
                     $.ajax({
-                        type: 'POST',
                         url: "/Roster/GetUnitById",
                         data: {
                             unitId: totroops,
@@ -322,7 +320,6 @@
                 (unitType == "HeavySupport" && heavyCount < maxHeavyCount) ||
                 (unitType == "FastAttack" && fastCount < maxFastCount)) {
                 $.ajax({
-                    type: 'POST',
                     url: "/Roster/AddUnit",
                     data: {
                         race: raceId,
@@ -379,7 +376,6 @@
             });
 
             $.ajax({
-                type: 'POST',
                 url: "/Roster/AddLoot",
                 data: {
                     unitId: unitId,

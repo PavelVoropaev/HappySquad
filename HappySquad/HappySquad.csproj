@@ -29,6 +29,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -208,6 +212,11 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\BaseState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery.dataTables.css" />
@@ -281,14 +290,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\themes\base\images\Sorting icons.psd" />
-    <None Include="Properties\PublishProfiles\HappySquad - FTP %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - FTP %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - FTP %284%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %284%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy %285%29.pubxml" />
-    <None Include="Properties\PublishProfiles\HappySquad - Web Deploy.pubxml" />
+    <Content Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\Чистовик.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\cross.png" />
@@ -406,7 +412,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>59648</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:58261/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

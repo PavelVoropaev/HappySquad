@@ -6,7 +6,7 @@ namespace HappySquad.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Models.HappyDbContext context)

@@ -38,14 +38,12 @@
             return View();
         }
 
-        [HttpPost]
         public ActionResult AddUnit(string race, string type)
         {
             var units = this.db.Units.AsEnumerable().Where(unit => unit.Race == (Race)Convert.ToByte(race) && unit.Type.ToString() == type).ToList();
-            return Json(units);
+            return Json(units, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
         public ActionResult AddLoot(string unitId, string lootIds)
         {
             var equippedLoots = new List<int>();
@@ -74,14 +72,13 @@
                 mayEquippedLoots.AddRange(this.db.Loots.Where(loot => loot.Id == lootId));
             }
 
-            return Json(mayEquippedLoots);
+            return Json(mayEquippedLoots, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
         public ActionResult GetUnitById(string unitId)
         {
             var units = this.db.Units.AsEnumerable().Where(unit => unit.Id.ToString() == unitId).ToList();
-            return Json(units);
+            return Json(units, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

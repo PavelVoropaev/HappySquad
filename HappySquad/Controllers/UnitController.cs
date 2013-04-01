@@ -14,11 +14,6 @@
     {
         private readonly HappyDbContext db = new HappyDbContext();
 
-        public UnitController()
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<HappyDbContext, Configuration>());
-        }
-
         // GET: /Unit/
         public ActionResult Index()
         {
