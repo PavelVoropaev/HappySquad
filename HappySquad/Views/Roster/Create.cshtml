@@ -35,7 +35,7 @@
         </div>
         <p>
             <input type="button" onclick="addUnit('HQ')" value="Добавить HQ" />
-            <input onclick="    remove('HQ')" value="X" type="button" />
+            <input onclick=" removeUnit('HQ')" value="X" type="button" />
             <span id="HQCost">Цена за HQ: 
             </span>
         </p>
@@ -45,7 +45,7 @@
         </div>
         <p>
             <input type="button" onclick="addUnit('Troops')" value="Добавить Troops" />
-            <input onclick="remove('Troops')" value="X" type="button" />
+            <input onclick=" removeUnit('Troops')" value="X" type="button" />
             <span id="TroopsCost">Цена за Troops: 
             </span>
         </p>
@@ -55,7 +55,7 @@
         </div>
         <p>
             <input type="button" onclick="addUnit('Elite')" value="Добавить Elite" />
-            <input onclick="remove('Elite')" value="X" type="button" />
+            <input onclick=" removeUnit('Elite')" value="X" type="button" />
             <span id="EliteCost">Цена за Elite: 
             </span>
         </p>
@@ -66,7 +66,7 @@
         </div>
         <p>
             <input type="button" onclick="addUnit('FastAttack')" value="Добавить Fast Attack" />
-            <input onclick="remove('FastAttack')" value="X" type="button" />
+            <input onclick=" removeUnit('FastAttack')" value="X" type="button" />
             <span id="FastAttackCost">Цена за Fast Attack: 
             </span>
         </p>
@@ -76,7 +76,7 @@
         </div>
         <p>
             <input type="button" onclick="addUnit('HeavySupport')" value="Добавить Heavy Support" />
-            <input onclick="remove('HeavySupport')" value="X" type="button" />
+            <input onclick=" removeUnit('HeavySupport')" value="X" type="button" />
             <span id="HeavySupportCost">Цена за HeavySupport: 
             </span>
         </p>
@@ -165,7 +165,7 @@
 
         });
 
-        function remove(type) {
+        function removeUnit(type) {
 
             switch (type) {
                 case "HQ":
@@ -188,7 +188,7 @@
                     break;
             }
 
-            $('.' + type).children().last().remove();
+            $('.' + type).children("table").last().remove();
 
             refreshCost();
         }
