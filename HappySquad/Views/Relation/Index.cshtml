@@ -9,51 +9,68 @@
 <p>
     @Html.ActionLink("Добавить Соответствие", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LootId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddLootId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExLootId)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<table id="relationTable" class="dataTable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LootName)
-            </td>
-            <td>
-                @foreach (var addloot in item.AddLootName)
-                {
-                    @addloot <br />
-                }
-            </td>
-            <td>
-                @foreach (var exloot in item.ExLootName)
-                {
-                
-                    @exloot <br />
-                }
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LootId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddLootId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExLootId)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LootName)
+                </td>
+                <td>
+                    @foreach (var addloot in item.AddLootName)
+                    {
+                        @addloot <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var exloot in item.ExLootName)
+                    {
+                
+                        @exloot <br />
+                    }
+                </td>
 
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts {
+    @Styles.Render("~/Content/themes/base/dataTables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dataTables")
+    <script> $(document).ready(function () {
+     $('#relationTable').dataTable({
+
+         "aaSorting": [[0, "desc"]],
+         "aoColumns": [null, null, null, null, null],
+         "bLengthChange": false,
+     });
+ });
+    </script>}

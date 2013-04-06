@@ -9,6 +9,7 @@
 <p>
     @Html.ActionLink("Добавить Юнита", "Create")
 </p>
+
 <table id="unitTable" class="dataTable">
     <thead>
         <tr>
@@ -61,11 +62,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <link href="~/Content/jquery.dataTables_themeroller.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    @Styles.Render("~/Content/themes/base/dataTables")
+    @Scripts.Render("~/bundles/dataTables")
+
     <script> $(document).ready(function () {
      $('#unitTable').dataTable({
-
          "aaSorting": [[0, "desc"]],
          "aoColumns": [null, null, null, null, null, null],
          "bLengthChange": false,

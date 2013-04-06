@@ -1,8 +1,22 @@
 ﻿@model IEnumerable<HappySquad.Models.Loot>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Styles.Render("~/Content/themes/base/dataTables")
+    @Scripts.Render("~/bundles/dataTables")
+    <script> $(document).ready(function () {
+     $('#lootTable').dataTable({
 
+         "aaSorting": [[0, "desc"]],
+         "aoColumns": [null, null, null],
+         "bLengthChange": false,
+     });
+ });
+    </script>}
 @{
     ViewBag.Title = "Каталог снаряжения";
 }
+
+
 
 <h2>Каталог снаряжения</h2>
 
@@ -41,17 +55,3 @@
         }
     </tbody>
 </table>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <link href="~/Content/jquery.dataTables_themeroller.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
-    <script> $(document).ready(function () {
-     $('#lootTable').dataTable({
-
-         "aaSorting": [[0, "desc"]],
-         "aoColumns": [null, null, null],
-         "bLengthChange": false,
-     });
- });
-    </script>}
