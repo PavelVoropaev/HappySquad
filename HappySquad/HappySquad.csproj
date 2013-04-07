@@ -294,12 +294,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\ftp.pubxml" />
     <None Include="Properties\PublishProfiles\Чистовик.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\cross.png" />
-    <Content Include="Scripts\jquery-1.7.1.js" />
-    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-ui-1.10.2.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.2.custom.min.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
